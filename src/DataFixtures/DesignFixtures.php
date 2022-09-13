@@ -11,6 +11,7 @@ class DesignFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $design = new Design();
+        $design->setTitle('A very nice title!');
         $design->setLogo('test');
         $design->setBackgroundImage('test2');
         $design->setPageColor('#000000');

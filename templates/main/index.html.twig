@@ -14,6 +14,18 @@
     <div style="background-color: {{ design.pageColor }}; color: {{ design.textColor }}">
         This is nice text of mane page look at me!!
 
+        {{ design.title }}
+
+        {% for product in products %}
+            <div style="background-color: red">
+                {{ product.title}}
+                {{ product.description }}
+                <img src="{{ product.image }}" alt="{{ product.title }}"/>
+                Regular price: {{ product.regularPrice }}
+                Member price: {{ product.memberPrice }}
+            </div>
+        {% endfor %}
+
         <div>
             Footer:
 

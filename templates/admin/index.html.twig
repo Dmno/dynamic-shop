@@ -1,5 +1,9 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/base.html.twig' %}
 
 {% block body %}
     <p> This is the admin page! :)</p>
+
+    {{ design.id }}
+
+    <a href="{{ path('edit_design', {'id': design.id}) }}">Edit design</a>
 {% endblock %}
