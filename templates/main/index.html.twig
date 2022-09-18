@@ -1,51 +1,67 @@
 {% extends 'base.html.twig' %}
 
-
-{#Fix this#}
-{% block styles %}
+{% block body %}
     <style>
+        body {
+            background-color: {{ design.pageColor }};
+            color: {{ design.textColor }};
+        }
+
         a {
             color: {{ design.secondaryTextColor }};
         }
     </style>
-{% endblock %}
 
-{% block body %}
-    <div style="background-color: {{ design.pageColor }}; color: {{ design.textColor }}">
-        This is nice text of mane page look at me!!
+    <div class="header">
+        <img class="logo" alt="{{ design.title}}" src={{ design.logo }} />
 
-        {{ design.title }}
-
-        {% for product in products %}
-            <div style="background-color: red">
-                {{ product.title}}
-                {{ product.description }}
-                <img src="{{ product.image }}" alt="{{ product.title }}"/>
-                Regular price: {{ product.regularPrice }}
-                Member price: {{ product.memberPrice }}
-            </div>
-        {% endfor %}
-
-        <div>
-            Footer:
-
-            Blabla
-
-            Questions? Comments?
-            <ul>
-                <li>{{ design.phoneNumber }}</li>
-                <li>24 hours a day, 7 days a week or <a href="sms:{{ design.phoneNumber }}">send us a message</a></li>
-            </ul>
-
-            Contact Address
-            <ul>
-                <li>{{ design.companyName }}</li>
-                <li>{{ design.address }}</li>
-                <li>{{ design.country }}</li>
-                <li>{{ design.postalCode }}</li>
-            </ul>
-
-            {{ design.copyright }}
+        <div class="auth">
+            <a href="#">Login</a>
+            <a href="#">Register</a>
         </div>
+    </div>
+
+    <div class="main">
+        <div class="thumbnail" style="">
+            <img class="backgroundImage" src={{ design.backgroundImage }} />
+
+            <p class="backgroundText">{{ design.title }}</p>
+        </div>
+
+        <div class="products">
+            <div class="productGrid">
+                {% for product in products %}
+                    <div class="productCard">
+                        {{ product.title}}
+                        {{ product.description }}
+                        <img style="max-width: 100px; max-height: 100px" src="{{ product.image }}" alt="{{ product.title }}"/>
+                        Regular price: {{ product.regularPrice }}
+                        Member price: {{ product.memberPrice }}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        Footer:
+
+        Blabla
+
+        Questions? Comments?
+        <ul>
+            <li>{{ design.phoneNumber }}</li>
+            <li>24 hours a day, 7 days a week or <a href="sms:{{ design.phoneNumber }}">send us a message</a></li>
+        </ul>
+
+        Contact Address
+        <ul>
+            <li>{{ design.companyName }}</li>
+            <li>{{ design.address }}</li>
+            <li>{{ design.country }}</li>
+            <li>{{ design.postalCode }}</li>
+        </ul>
+
+        {{ design.copyright }}
     </div>
 {% endblock %}

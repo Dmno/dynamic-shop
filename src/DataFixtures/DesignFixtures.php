@@ -12,8 +12,8 @@ class DesignFixtures extends Fixture
     {
         $design = new Design();
         $design->setTitle('A very nice title!');
-        $design->setLogo('test');
-        $design->setBackgroundImage('test2');
+        $design->setLogo('https://www.pngkey.com/png/full/137-1377101_example-stamp-png-graphic-black-and-white-stock.png');
+        $design->setBackgroundImage('https://wallpaperaccess.com/full/343619.jpg');
         $design->setPageColor('#000000');
         $design->setTextColor('#FFFFFF');
         $design->setSecondaryTextColor('#E50C12');
