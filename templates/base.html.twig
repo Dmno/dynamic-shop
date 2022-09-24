@@ -15,6 +15,16 @@
         {% endblock %}
     </head>
     <body>
+        {% for label, messages in app.flashes() %}
+            {% for message in messages %}
+                <div class="text-center">
+                    <div class="alert alert-{{ label }}" style="display: inline-block">
+                        {{ message }}
+                    </div>
+                </div>
+            {% endfor %}
+        {% endfor %}
+
         {% block body %}{% endblock %}
     </body>
 </html>

@@ -16,8 +16,12 @@
         <img class="logo" alt="{{ design.title}}" src={{ design.logo }} />
 
         <div class="auth">
-            <a href="#">Login</a>
-            <a href="#">Register</a>
+            {% if app.user %}
+                <a href="{{ path('app_logout')}}">Logout</a>
+            {% else %}
+                <a href="{{ path('app_login')}}">Login</a>
+                <a href="{{ path('app_register')}}">Register</a>
+            {% endif %}
         </div>
     </div>
 
