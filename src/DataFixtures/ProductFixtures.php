@@ -25,6 +25,76 @@ class ProductFixtures extends Fixture
                 'regularPrice' => 1.99,
                 'memberPrice' => 0.69
             ],
+            [
+                'title' => 'Orange',
+                'description' => 'A nice orange color fruit',
+                'image' => 'https://www.santosfood.com/wp-content/uploads/2020/01/img-7.jpg',
+                'regularPrice' => 1.99,
+                'memberPrice' => 0.69
+            ],
+            [
+                'title' => 'Orange',
+                'description' => 'A nice orange color fruit',
+                'image' => 'https://www.santosfood.com/wp-content/uploads/2020/01/img-7.jpg',
+                'regularPrice' => 1.99,
+                'memberPrice' => 0.69
+            ],
+            [
+                'title' => 'Orange',
+                'description' => 'A nice orange color fruit',
+                'image' => 'https://www.santosfood.com/wp-content/uploads/2020/01/img-7.jpg',
+                'regularPrice' => 1.99,
+                'memberPrice' => 0.69
+            ],
+            [
+                'title' => 'Orange',
+                'description' => 'A nice orange color fruit',
+                'image' => 'https://www.santosfood.com/wp-content/uploads/2020/01/img-7.jpg',
+                'regularPrice' => 1.99,
+                'memberPrice' => 0.69
+            ],
+            [
+                'title' => 'Orange',
+                'description' => 'A nice orange color fruit',
+                'image' => 'https://www.santosfood.com/wp-content/uploads/2020/01/img-7.jpg',
+                'regularPrice' => 1.99,
+                'memberPrice' => 0.69
+            ],
+            [
+                'title' => 'Orange',
+                'description' => 'A nice orange color fruit',
+                'image' => 'https://www.santosfood.com/wp-content/uploads/2020/01/img-7.jpg',
+                'regularPrice' => 1.99,
+                'memberPrice' => 0.69
+            ],
+            [
+                'title' => 'Orange',
+                'description' => 'A nice orange color fruit',
+                'image' => 'https://www.santosfood.com/wp-content/uploads/2020/01/img-7.jpg',
+                'regularPrice' => 1.99,
+                'memberPrice' => 0.69
+            ],
+            [
+                'title' => 'Orange',
+                'description' => 'A nice orange color fruit',
+                'image' => 'https://www.santosfood.com/wp-content/uploads/2020/01/img-7.jpg',
+                'regularPrice' => 1.99,
+                'memberPrice' => 0.69
+            ],
+            [
+                'title' => 'Orange',
+                'description' => 'A nice orange color fruit',
+                'image' => 'https://www.santosfood.com/wp-content/uploads/2020/01/img-7.jpg',
+                'regularPrice' => 1.99,
+                'memberPrice' => 0.69
+            ],
+            [
+                'title' => 'Orange',
+                'description' => 'A nice orange color fruit',
+                'image' => 'https://www.santosfood.com/wp-content/uploads/2020/01/img-7.jpg',
+                'regularPrice' => 1.99,
+                'memberPrice' => 0.69
+            ],
         ];
 
         foreach ($items as $item) {

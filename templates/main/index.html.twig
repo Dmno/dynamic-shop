@@ -28,40 +28,60 @@
             <p class="backgroundText">{{ design.title }}</p>
         </div>
 
-        <div class="products">
-            <div class="productGrid">
-                {% for product in products %}
-                    <div class="productCard">
-                        {{ product.title}}
-                        {{ product.description }}
-                        <img style="max-width: 100px; max-height: 100px" src="{{ product.image }}" alt="{{ product.title }}"/>
-                        Regular price: {{ product.regularPrice }}
-                        Member price: {{ product.memberPrice }}
-                    </div>
-                {% endfor %}
+        {% if products is not empty %}
+
+            <h2 class="productsTitle">OUR COLLECTIONS</h2>
+
+            <div class="products">
+                <div class="productGrid">
+                    {% for product in products %}
+                        <div class="productCard">
+                            <img class="productImage" src="{{ product.image }}" alt="{{ product.title }}"/>
+                            <p class="productDescription">{{ product.description }}</p>
+
+                            <div class="regularPrice">
+                                <span>Regular price:</span>
+                                <p>{{ product.regularPrice }}</p>
+                            </div>
+
+                            <div class="memberPrice">
+                                <span>Member price:</span>
+                                <p>{{ product.memberPrice }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
-        </div>
+        {% endif %}
     </div>
 
     <div class="footer">
-        Footer:
+        <div class="footerContainer">
+            <div class="footerItem">
+                <img class="logo" alt="{{ design.title}}" src={{ design.logo }} />
+            </div>
 
-        Blabla
+            <div class="footerItem">
+                Questions? Comments?
+                <ul>
+                    <li>{{ design.phoneNumber }}</li>
+                    <li>24 hours a day, 7 days a week or <a href="sms:{{ design.phoneNumber }}">send us a message</a></li>
+                </ul>
+            </div>
 
-        Questions? Comments?
-        <ul>
-            <li>{{ design.phoneNumber }}</li>
-            <li>24 hours a day, 7 days a week or <a href="sms:{{ design.phoneNumber }}">send us a message</a></li>
-        </ul>
+            <div class="footerItem">
+                Contact Address
+                <ul>
+                    <li>{{ design.companyName }}</li>
+                    <li>{{ design.address }}</li>
+                    <li>{{ design.country }}</li>
+                    <li>{{ design.postalCode }}</li>
+                </ul>
+            </div>
+        </div>
 
-        Contact Address
-        <ul>
-            <li>{{ design.companyName }}</li>
-            <li>{{ design.address }}</li>
-            <li>{{ design.country }}</li>
-            <li>{{ design.postalCode }}</li>
-        </ul>
-
-        {{ design.copyright }}
+        <div class="copyright">
+            {{ design.copyright }}
+        </div>
     </div>
 {% endblock %}
