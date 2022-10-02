@@ -39,28 +39,24 @@ class ProductRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Product[] Returns an array of Product objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * @return Product[] Returns an array of Product objects
+     */
+    public function findAllById(array $productIds): array
+    {
+        $products = $this->createQueryBuilder('p')
+            ->andWhere('p.id in (:productIds)')
+            ->setParameter('productIds', $productIds)
+            ->getQuery()
+            ->getResult()
+        ;
 
-//    public function findOneBySomeField($value): ?Product
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        $productCount = array_count_values($productIds);
+
+        foreach ($products as $product) {
+            $product->count = $productCount[$product->getId()];
+        }
+
+        return $products;
+    }
 }

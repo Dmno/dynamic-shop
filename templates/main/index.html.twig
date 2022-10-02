@@ -15,8 +15,24 @@
     <div class="header">
         <img class="logo" alt="{{ design.title}}" src={{ design.logo }} />
 
+        <div class="cart">
+            *Cart logo*
+            <div class="cartContent">
+                {% if cart is not empty %}
+                    {% for product in cart %}
+                        <div class="cartProduct">
+                            {{ product.title }}
+                            {{ product.count }}
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>Cart is empty</p>
+                {% endif %}
+            </div>
+        </div>
         <div class="auth">
             {% if app.user %}
+                <i class="userId" id="{{ app.user.id }}" style="display: none;"></i>
                 <a href="{{ path('app_logout')}}">Logout</a>
             {% else %}
                 <a href="{{ path('app_login')}}">Login</a>
@@ -39,7 +55,8 @@
             <div class="products">
                 <div class="productGrid">
                     {% for product in products %}
-                        <div class="productCard">
+                        <div class="productCard" id="{{ product.id }}">
+                            <p class="productTitle" style="display: none;">{{ product.title }}</p>
                             <img class="productImage" src="{{ product.image }}" alt="{{ product.title }}"/>
                             <p class="productDescription">{{ product.description }}</p>
 
@@ -52,6 +69,9 @@
                                 <span>Member price:</span>
                                 <p>{{ product.memberPrice }}</p>
                             </div>
+
+                            <button class="addToCart" id="{{ product.id }}">Add to cart</button>
+                            <button class="removeFromCart" id="{{ product.id }}">Remove from cart</button>
                         </div>
                     {% endfor %}
                 </div>
