@@ -25,6 +25,7 @@ class DesignType extends AbstractType
             ->add('country', TextType::class)
             ->add('postalCode', TextType::class)
             ->add('copyright', TextType::class)
+            ->add('productCount', TextType::class)
             ->add('Submit', SubmitType::class);
     }
 }

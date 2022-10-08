@@ -21,77 +21,77 @@ class ProductFixtures extends Fixture
             [
                 'title' => 'Orange',
                 'description' => 'A nice orange color fruit',
-                'image' => 'https://www.santosfood.com/wp-content/uploads/2020/01/img-7.jpg',
+                'image' => 'https://www.e-fresco.io/pub/media/catalog/product/o/r/orange_4.jpg',
                 'regularPrice' => 1.99,
                 'memberPrice' => 0.69
             ],
             [
                 'title' => 'Orange',
                 'description' => 'A nice orange color fruit',
-                'image' => 'https://www.santosfood.com/wp-content/uploads/2020/01/img-7.jpg',
+                'image' => 'https://www.e-fresco.io/pub/media/catalog/product/o/r/orange_4.jpg',
                 'regularPrice' => 1.99,
                 'memberPrice' => 0.69
             ],
             [
                 'title' => 'Orange',
                 'description' => 'A nice orange color fruit',
-                'image' => 'https://www.santosfood.com/wp-content/uploads/2020/01/img-7.jpg',
+                'image' => 'https://www.e-fresco.io/pub/media/catalog/product/o/r/orange_4.jpg',
                 'regularPrice' => 1.99,
                 'memberPrice' => 0.69
             ],
             [
                 'title' => 'Orange',
                 'description' => 'A nice orange color fruit',
-                'image' => 'https://www.santosfood.com/wp-content/uploads/2020/01/img-7.jpg',
+                'image' => 'https://www.e-fresco.io/pub/media/catalog/product/o/r/orange_4.jpg',
                 'regularPrice' => 1.99,
                 'memberPrice' => 0.69
             ],
             [
                 'title' => 'Orange',
                 'description' => 'A nice orange color fruit',
-                'image' => 'https://www.santosfood.com/wp-content/uploads/2020/01/img-7.jpg',
+                'image' => 'https://www.e-fresco.io/pub/media/catalog/product/o/r/orange_4.jpg',
                 'regularPrice' => 1.99,
                 'memberPrice' => 0.69
             ],
             [
                 'title' => 'Orange',
                 'description' => 'A nice orange color fruit',
-                'image' => 'https://www.santosfood.com/wp-content/uploads/2020/01/img-7.jpg',
+                'image' => 'https://www.e-fresco.io/pub/media/catalog/product/o/r/orange_4.jpg',
                 'regularPrice' => 1.99,
                 'memberPrice' => 0.69
             ],
             [
                 'title' => 'Orange',
                 'description' => 'A nice orange color fruit',
-                'image' => 'https://www.santosfood.com/wp-content/uploads/2020/01/img-7.jpg',
+                'image' => 'https://www.e-fresco.io/pub/media/catalog/product/o/r/orange_4.jpg',
                 'regularPrice' => 1.99,
                 'memberPrice' => 0.69
             ],
             [
                 'title' => 'Orange',
                 'description' => 'A nice orange color fruit',
-                'image' => 'https://www.santosfood.com/wp-content/uploads/2020/01/img-7.jpg',
+                'image' => 'https://www.e-fresco.io/pub/media/catalog/product/o/r/orange_4.jpg',
                 'regularPrice' => 1.99,
                 'memberPrice' => 0.69
             ],
             [
                 'title' => 'Orange',
                 'description' => 'A nice orange color fruit',
-                'image' => 'https://www.santosfood.com/wp-content/uploads/2020/01/img-7.jpg',
+                'image' => 'https://www.e-fresco.io/pub/media/catalog/product/o/r/orange_4.jpg',
                 'regularPrice' => 1.99,
                 'memberPrice' => 0.69
             ],
             [
                 'title' => 'Orange',
                 'description' => 'A nice orange color fruit',
-                'image' => 'https://www.santosfood.com/wp-content/uploads/2020/01/img-7.jpg',
+                'image' => 'https://www.e-fresco.io/pub/media/catalog/product/o/r/orange_4.jpg',
                 'regularPrice' => 1.99,
                 'memberPrice' => 0.69
             ],
             [
                 'title' => 'Orange',
                 'description' => 'A nice orange color fruit',
-                'image' => 'https://www.santosfood.com/wp-content/uploads/2020/01/img-7.jpg',
+                'image' => 'https://www.e-fresco.io/pub/media/catalog/product/o/r/orange_4.jpg',
                 'regularPrice' => 1.99,
                 'memberPrice' => 0.69
             ],

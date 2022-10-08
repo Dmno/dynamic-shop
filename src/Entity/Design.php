@@ -49,6 +49,9 @@ class Design
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $copyright = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $productCount = 0;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -190,6 +193,18 @@ class Design
     public function setCopyright(?string $copyright): self
     {
         $this->copyright = $copyright;
+
+        return $this;
+    }
+
+    public function getProductCount(): ?int
+    {
+        return $this->productCount;
+    }
+
+    public function setProductCount(?int $productCount): self
+    {
+        $this->productCount = $productCount;
 
         return $this;
     }

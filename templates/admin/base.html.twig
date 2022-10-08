@@ -25,8 +25,9 @@
 {% endfor %}
 
 <div class="header">
+    <a href="{{ path('main') }}">Main page</a>
     <a href="{{ path('admin_main') }}">Admin main</a>
-    <a href="#">Products</a>
+    <a href="{{ path('admin_products') }}">Products</a>
 </div>
 
 {% block body %}{% endblock %}

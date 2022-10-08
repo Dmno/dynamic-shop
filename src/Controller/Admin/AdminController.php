@@ -2,9 +2,10 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Design;
+use App\Entity\Product;
 use App\Form\DesignType;
 use App\Repository\DesignRepository;
+use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,7 +17,8 @@ class AdminController extends AbstractController
 {
     public function __construct(
         private EntityManagerInterface $em,
-        private DesignRepository $designRepository
+        private DesignRepository $designRepository,
+        private ProductRepository $productRepository
     )
     {
     }
@@ -27,6 +29,27 @@ class AdminController extends AbstractController
         return $this->render('admin/index.html.twig', [
             'design' => $this->designRepository->findOneBy([])
         ]);
+    }
+
+    #[Route('/products', name: 'admin_products')]
+    public function productPage()
+    {
+        return $this->render('admin/products.html.twig', [
+            'products' => $this->productRepository->findAll()
+        ]);
+    }
+
+    #[Route('/products/delete/{id}', name: 'product_delete')]
+    public function deleteProduct(Request $request, int $id)
+    {
+        $product = $this->productRepository->findOneBy(['id' => $id]);
+
+        $this->em->remove($product);
+        $this->em->flush();
+        $this->addFlash('success', 'Product has been deleted');
+
+        $referer = $request->headers->get('referer');
+        return $this->redirect($referer);
     }
 
     #[Route('/edit-design/{id}', name: 'edit_design')]

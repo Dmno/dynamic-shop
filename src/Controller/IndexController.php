@@ -32,9 +32,11 @@ class IndexController extends AbstractController
             }
         }
 
+        $design = $this->designRepository->findOneBy([]);
+
         return $this->render('main/index.html.twig', [
-            'design' => $this->designRepository->findOneBy([]),
-            'products' => $this->productRepository->findAll(),
+            'design' => $design,
+            'products' => $this->productRepository->getAllProductsWithLimit($design->getProductCount()),
             'cart' => $cartProducts
         ]);
     }
