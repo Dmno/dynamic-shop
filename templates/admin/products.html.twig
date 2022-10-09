@@ -5,10 +5,28 @@
 
     <a href="#">Add product</a>
 
+    <p>Quick order templates for the main page:</p>
+    <b>!This will IMMEDIATELY take effect on the page!</b>
+
+    <form action="{{ path('product_order') }}">
+        <label for="order">Pre-made order options</label>
+        <select name="order" id="order">
+            <option value="default">Oldest to newest (1, 2, ..., 20)</option>
+            <option value="id_desc">Newest to oldest (20, 19, ..., 1)</option>
+            <option value="rprice_asc">Regular price - smallest to largest</option>
+            <option value="rprice_desc">Regular price - largest to smallest</option>
+            <option value="mprice_asc">Member price - smallest to largest</option>
+            <option value="mprice_desc">Member price - largest to smallest</option>
+        </select>
+
+        <button type="submit">Save</button>
+    </form>
+
     {% if products is not empty %}
         <table class="table table-striped table-sm table-hover mt-3">
             <thead>
             <tr>
+                <th>Order</th>
                 <th>ID</th>
                 <th>Title</th>
                 <th>Description</th>
@@ -20,6 +38,13 @@
             <tbody>
             {% for product in products %}
                 <tr>
+                    <td>
+                        {% if product.displayOrder is empty %}
+                            {{ product.id }}
+                        {% else %}
+                            {{ product.displayOrder }}
+                        {% endif %}
+                    </td>
                     <td>{{ product.id }}</td>
                     <td>{{ product.title }}</td>
                     <td>{{ product.description }}</td>

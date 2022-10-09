@@ -36,7 +36,7 @@ class IndexController extends AbstractController
 
         return $this->render('main/index.html.twig', [
             'design' => $design,
-            'products' => $this->productRepository->getAllProductsWithLimit($design->getProductCount()),
+            'products' => $this->productRepository->getProductsWithLimitAndOrder($design->getProductCount()),
             'cart' => $cartProducts
         ]);
     }

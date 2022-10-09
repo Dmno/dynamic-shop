@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\Design;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -37,6 +39,14 @@ class DesignRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function getDesignProductLimit(): array
+    {
+        return $this->createQueryBuilder('d')
+            ->select('d.productCount')
+            ->getQuery()
+            ->getSingleResult();
     }
 
 //    /**

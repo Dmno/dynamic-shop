@@ -60,11 +60,36 @@ class ProductRepository extends ServiceEntityRepository
         return $products;
     }
 
-
-    public function getAllProductsWithLimit(?int $limit = 0): array
+    /**
+     * For the main page
+     * @param int $limit
+     * @return array
+     */
+    public function getProductsWithLimitAndOrder(int $limit): array
     {
         return $this->createQueryBuilder('p')
             ->setMaxResults($limit)
+            ->addOrderBy('p.displayOrder', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * For the admin page
+     * @return array
+     */
+    public function getAllProductsWithOrder(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->addOrderBy('p.displayOrder', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getAllProductsWithCustomOrder(array $order): array
+    {
+        return $this->createQueryBuilder('p')
+            ->orderBy($order[0], $order[1])
             ->getQuery()
             ->getResult();
     }

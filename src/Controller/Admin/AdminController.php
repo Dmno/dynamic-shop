@@ -2,10 +2,10 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Product;
 use App\Form\DesignType;
 use App\Repository\DesignRepository;
 use App\Repository\ProductRepository;
+use App\Service\ProductOrder;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,7 +18,8 @@ class AdminController extends AbstractController
     public function __construct(
         private EntityManagerInterface $em,
         private DesignRepository $designRepository,
-        private ProductRepository $productRepository
+        private ProductRepository $productRepository,
+        private ProductOrder $productOrder,
     )
     {
     }
@@ -31,12 +32,29 @@ class AdminController extends AbstractController
         ]);
     }
 
+    //TODO - kai kursi producto pridejima nepamirsk prisetinti jam orderi lygu jo id
+    // arba vienu didesniu nei paskutinis order value
+
+    //TODO 2 - saugoti pasirinkta pre-made order value ir atnaujinti select lista su ja
+    // taip pat jei bus custom rodyt tai (gal veliau save custom order?)
+
     #[Route('/products', name: 'admin_products')]
     public function productPage()
     {
         return $this->render('admin/products.html.twig', [
-            'products' => $this->productRepository->findAll()
+            'products' => $this->productRepository->getAllProductsWithOrder(),
+            'design' => $this->designRepository->getDesignProductLimit()
         ]);
+    }
+
+    #[Route('/products/order', name: 'product_order')]
+    public function productOrder(Request $request)
+    {
+        $order = $request->get('order');
+
+        $this->productOrder->orderProductsByParameter($order);
+
+        return $this->redirectToRoute('admin_products');
     }
 
     #[Route('/products/delete/{id}', name: 'product_delete')]

@@ -28,6 +28,9 @@ class Product
     #[ORM\Column(nullable: true)]
     private ?float $memberPrice = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $displayOrder = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -89,6 +92,18 @@ class Product
     public function setMemberPrice(?float $memberPrice): self
     {
         $this->memberPrice = $memberPrice;
+
+        return $this;
+    }
+
+    public function getDisplayOrder(): ?int
+    {
+        return $this->displayOrder;
+    }
+
+    public function setDisplayOrder(?int $displayOrder): self
+    {
+        $this->displayOrder = $displayOrder;
 
         return $this;
     }
