@@ -1,9 +1,17 @@
 {% extends 'admin/base.html.twig' %}
 
 {% block body %}
-    <p> This is the admin page! :)</p>
+    <div class="main">
+        <div class="adminHeader">
+            Admin main
+        </div>
 
-    {{ design.id }}
+        {% include 'admin/messages.html.twig' %}
 
-    <a href="{{ path('edit_design', {'id': design.id}) }}">Edit design</a>
+        <div class="content">
+            {{ design.id }}
+
+            <a href="{{ path('edit_design', {'id': design.id}) }}">Edit design</a>
+        </div>
+    </div>
 {% endblock %}

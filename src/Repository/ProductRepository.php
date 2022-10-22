@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @extends ServiceEntityRepository<Product>
@@ -16,7 +18,7 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ProductRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, private PaginatorInterface $paginator)
     {
         parent::__construct($registry, Product::class);
     }
@@ -92,5 +94,23 @@ class ProductRepository extends ServiceEntityRepository
             ->orderBy($order[0], $order[1])
             ->getQuery()
             ->getResult();
+    }
+
+    public function findProductsPaginatedWithSearch(int $pageLimit, ?string $query, ?int $page): PaginationInterface
+    {
+        $pageNumber = $page ?? 1;
+
+        $qb = $this->createQueryBuilder('p');
+
+        if (isset($query)) {
+            $qb
+                ->andWhere('p.title LIKE :query')
+                ->setParameter('query', '%' . $query . '%');
+        } else {
+            $qb
+                ->addOrderBy('p.displayOrder', 'ASC');
+        }
+
+        return $this->paginator->paginate($qb->getQuery(), $pageNumber, $pageLimit);
     }
 }

@@ -1,0 +1,78 @@
+.adminHeader {
+    display: flex;
+    margin: 0 0 10px -10px;
+    padding: 10px 0 14px 40px;
+    background-color: #dce9f7;
+    font-size: 2em;
+    line-height: 170%;
+    font-weight: 600;
+}
+
+.menuSidebar {
+    height: 100%;
+    width: 200px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #26269b;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+.menuSidebar a {
+    padding: 6px 6px 6px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: white;
+    display: block;
+}
+
+.menuSidebar span {
+    position: fixed;
+    bottom: 10px;
+    font-weight: 600;
+}
+
+.menuSidebar a:hover {
+    color: #e77904;
+}
+
+.main {
+    margin-left: 200px;
+}
+
+.content {
+    padding: 20px 0 0 30px;
+}
+
+.content form {
+    max-width: 80%;
+}
+
+.utilityBar {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 50px;
+    align-items: stretch;
+}
+
+.utilityBar form {
+    display: inline-flex;
+}
+
+.form-button {
+    margin-left: 20px;
+}
+
+.disclaimer {
+    display: block;
+    margin-bottom: 10px;
+}
+
+@media screen and (max-height: 450px) {
+    .menuSidebar {padding-top: 15px;}
+    .menuSidebar a {font-size: 18px;}
+}

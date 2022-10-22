@@ -1,68 +1,89 @@
 {% extends 'admin/base.html.twig' %}
 
 {% block body %}
-    <h1>Products</h1>
+    <div class="main">
+        <div class="adminHeader">
+            Products
+        </div>
 
-    <a href="#">Add product</a>
+        {% include 'admin/messages.html.twig' %}
 
-    <p>Quick order templates for the main page:</p>
-    <b>!This will IMMEDIATELY take effect on the page!</b>
+        <div class="content">
+            <a href="{{ path('product_add') }}">Add product</a>
 
-    <form action="{{ path('product_order') }}">
-        <label for="order">Pre-made order options</label>
-        <select name="order" id="order">
-            <option value="default">Oldest to newest (1, 2, ..., 20)</option>
-            <option value="id_desc">Newest to oldest (20, 19, ..., 1)</option>
-            <option value="rprice_asc">Regular price - smallest to largest</option>
-            <option value="rprice_desc">Regular price - largest to smallest</option>
-            <option value="mprice_asc">Member price - smallest to largest</option>
-            <option value="mprice_desc">Member price - largest to smallest</option>
-        </select>
+            {% if products is not empty %}
+                <b class="disclaimer text-center">!Changing product order automatically orders the products in the main page!</b>
 
-        <button type="submit">Save</button>
-    </form>
+                <div class="utilityBar">
+                    <form action="{{ path('product_order') }}">
+                        <select name="order" class="form-select" id="order">
+                            <option value="default">Oldest to newest (1, 2, ..., 20)</option>
+                            <option value="id_desc">Newest to oldest (20, 19, ..., 1)</option>
+                            <option value="rprice_asc">Regular price - smallest to largest</option>
+                            <option value="rprice_desc">Regular price - largest to smallest</option>
+                            <option value="mprice_asc">Member price - smallest to largest</option>
+                            <option value="mprice_desc">Member price - largest to smallest</option>
+                        </select>
 
-    {% if products is not empty %}
-        <table class="table table-striped table-sm table-hover mt-3">
-            <thead>
-            <tr>
-                <th>Order</th>
-                <th>ID</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Image</th>
-                <th>Regular price</th>
-                <th>Member price</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for product in products %}
-                <tr>
-                    <td>
-                        {% if product.displayOrder is empty %}
-                            {{ product.id }}
-                        {% else %}
-                            {{ product.displayOrder }}
-                        {% endif %}
-                    </td>
-                    <td>{{ product.id }}</td>
-                    <td>{{ product.title }}</td>
-                    <td>{{ product.description }}</td>
-                    <td>{{ product.image|length > 50 ? product.image|slice(0, 50) ~ '...' : product.image  }}</td>
-                    <td>{{ product.regularPrice }}</td>
-                    <td>{{ product.memberPrice }}</td>
-                    <td>
-{#                        <button class="btn btn-sm btn-warning main-edit-notification ml-1" data-toggle="modal" data-target="#utilityModal" value="edit" id="edit{{ notification.id }}"><i class="fa fa-edit"></i></button>#}
-                        <button>Edit</button>
-                        <a href="{{ path('product_delete', {'id': product.id}) }}">
-                            <button class="btn btn-sm btn-danger ml-1" onclick="return confirm('This will delete the product, are you sure?')">Delete</button>
-                        </a>
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        <h1>No products created! Add some <a href="#">here</a></h1>
-    {% endif %}
+                        <button type="submit" class="btn btn-outline-success form-button">Save</button>
+                    </form>
+
+                    <form id="searchForm">
+                            <input type="text" name="query" value="{{ query }}" class="form-control" placeholder="Type a product title...">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-outline-secondary form-button">
+                                    <span class="fa fa-search">Search</span>
+                                </button>
+                            </div>
+                    </form>
+                </div>
+
+                <table class="table table-striped table-sm table-hover mt-3">
+                    <thead>
+                    <tr>
+                        <th>Order</th>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Image</th>
+                        <th>Regular price</th>
+                        <th>Member price</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for product in products %}
+                        <tr>
+                            <td>
+                                {% if product.displayOrder is empty %}
+                                    {{ product.id }}
+                                {% else %}
+                                    {{ product.displayOrder }}
+                                {% endif %}
+                            </td>
+                            <td>{{ product.id }}</td>
+                            <td>{{ product.title }}</td>
+                            <td>{{ product.description }}</td>
+                            <td>{{ product.image|length > 50 ? product.image|slice(0, 50) ~ '...' : product.image  }}</td>
+                            <td>{{ product.regularPrice }}</td>
+                            <td>{{ product.memberPrice }}</td>
+                            <td>
+                                <a href="{{ path('product_edit', {'id': product.id}) }}">
+                                    <button class="btn btn-sm btn-warning ml-1">Edit</button>
+                                </a>
+                                <a href="{{ path('product_delete', {'id': product.id}) }}">
+                                    <button class="btn btn-sm btn-danger ml-1" onclick="return confirm('This will delete the product, are you sure?')">Delete</button>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <h2>No products created! Add some <a href="{{ path('product_add') }}">here</a></h2>
+            {% endif %}
+            <div class="mt-3 text-center">
+                {{ knp_pagination_render(products) }}
+            </div>
+        </div>
+    </div>
 {% endblock %}
