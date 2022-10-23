@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Cart;
+use App\Entity\Design;
 use App\Repository\CartRepository;
 use App\Repository\DesignRepository;
 use App\Repository\ProductRepository;
@@ -32,11 +33,12 @@ class IndexController extends AbstractController
             }
         }
 
-        $design = $this->designRepository->findOneBy([]);
+        /** @var Design $design */
+        $design = $this->designRepository->getDesignWithJoins();
 
         return $this->render('main/index.html.twig', [
             'design' => $design,
-            'products' => $this->productRepository->getProductsWithLimitAndOrder($design->getProductCount()),
+            'products' => $this->productRepository->getProductsWithLimitAndOrder($design['productCount']),
             'cart' => $cartProducts
         ]);
     }

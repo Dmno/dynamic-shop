@@ -39,12 +39,22 @@ class DesignRepository extends ServiceEntityRepository
         }
     }
 
+    public function getDesignWithJoins(): array
+    {
+        return $this->createQueryBuilder('d')
+            ->leftJoin('d.backgroundImage', 'i')
+            ->select('d.id, d.title, d.logo, d.pageColor, d.textColor, d.secondaryTextColor, d.phoneNumber, d.companyName, d.address, d.country, d.postalCode, d.copyright, d.productCount, i.title as backgroundImage')
+            ->getQuery()
+            ->getSingleResult();
+    }
+
     public function getDesignProductLimit(): array
     {
         return $this->createQueryBuilder('d')
             ->select('d.productCount')
+            ->setMaxResults(1)
             ->getQuery()
-            ->getSingleResult();
+            ->getResult();
     }
 
 //    /**

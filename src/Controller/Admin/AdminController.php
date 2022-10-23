@@ -2,11 +2,13 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Design;
 use App\Entity\Product;
 use App\Form\DesignType;
 use App\Form\ProductType;
 use App\Repository\DesignRepository;
 use App\Repository\ProductRepository;
+use App\Service\ImageService;
 use App\Service\ProductOrder;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,6 +26,7 @@ class AdminController extends AbstractController
         private DesignRepository $designRepository,
         private ProductRepository $productRepository,
         private ProductOrder $productOrder,
+        private ImageService $imageService
     )
     {
     }
@@ -67,6 +70,10 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if (isset($form['imageUpload'])) {
+                $image = $this->imageService->checkAndProcessFile($form['imageUpload']->getData(), true);
+                $product->setImage($image);
+            }
             $lastOrderItem = $this->productRepository->findOneBy([], ['displayOrder' => 'DESC']);
 
             $displayOrder = 1;
@@ -91,12 +98,17 @@ class AdminController extends AbstractController
     #[Route('/products/edit/{id}', name: 'product_edit')]
     public function editProduct(Request $request, int $id): Response
     {
+        /** @var Product $product */
         $product = $this->productRepository->findOneBy(['id' => $id]);
 
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if (isset($form['imageUpload'])) {
+                $image = $this->imageService->checkAndProcessFile($form['imageUpload']->getData(), true);
+                $product->setImage($image);
+            }
             $this->em->flush();
 
             $this->addFlash('success', 'Edited successfully!');
@@ -126,15 +138,21 @@ class AdminController extends AbstractController
         return $this->redirect($referer);
     }
 
+    // TODO pridek logo upload aswell
     #[Route('/edit-design/{id}', name: 'edit_design')]
     public function editDesign(Request $request, int $id): Response
     {
+        /** @var Design $design */
         $design = $this->designRepository->findOneBy(['id' => $id]);
 
         $form = $this->createForm(DesignType::class, $design);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if (isset($form['imageUpload'])) {
+                $image = $this->imageService->checkAndProcessFile($form['imageUpload']->getData(), false);
+                $design->setBackgroundImage($image);
+            }
             $this->em->flush();
 
             $this->addFlash('success', 'Saved!');

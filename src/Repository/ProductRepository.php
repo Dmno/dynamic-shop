@@ -42,11 +42,23 @@ class ProductRepository extends ServiceEntityRepository
     }
 
     /**
+     * Get all products with image join
+     */
+    public function getProductsWithJoins($qb = null)
+    {
+        $qb = $qb ?? $this->createQueryBuilder('p');
+
+        return $qb
+            ->leftJoin('p.image', 'i')
+            ->select('p.id, p.title, p.description, p.regularPrice, p.memberPrice, p.displayOrder, i.title as image');
+    }
+
+    /**
      * @return Product[] Returns an array of Product objects
      */
     public function findAllById(array $productIds): array
     {
-        $products = $this->createQueryBuilder('p')
+        $products = $this->getProductsWithJoins()
             ->andWhere('p.id in (:productIds)')
             ->setParameter('productIds', $productIds)
             ->getQuery()
@@ -69,7 +81,7 @@ class ProductRepository extends ServiceEntityRepository
      */
     public function getProductsWithLimitAndOrder(int $limit): array
     {
-        return $this->createQueryBuilder('p')
+        return $this->getProductsWithJoins()
             ->setMaxResults($limit)
             ->addOrderBy('p.displayOrder', 'ASC')
             ->getQuery()
@@ -100,16 +112,15 @@ class ProductRepository extends ServiceEntityRepository
     {
         $pageNumber = $page ?? 1;
 
-        $qb = $this->createQueryBuilder('p');
+        $qb = $this->getProductsWithJoins();
 
         if (isset($query)) {
             $qb
                 ->andWhere('p.title LIKE :query')
                 ->setParameter('query', '%' . $query . '%');
-        } else {
-            $qb
-                ->addOrderBy('p.displayOrder', 'ASC');
         }
+
+        $qb->addOrderBy('p.displayOrder', 'ASC');
 
         return $this->paginator->paginate($qb->getQuery(), $pageNumber, $pageLimit);
     }

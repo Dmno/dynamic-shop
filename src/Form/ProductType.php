@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -15,8 +16,17 @@ class ProductType extends AbstractType
         $builder
             ->add('title', TextType::class)
             ->add('description', TextType::class)
-            ->add('description', TextType::class)
-            ->add('image', TextType::class)
+            ->add('imageUpload', FileType::class, [
+                'mapped' => false,
+                'required' => false,
+                'label' => 'Image',
+                'attr' => [
+                    'autocomplete' => 'off',
+                    'class' => 'image-type-selector',
+                    'id' => 'icon-select',
+                ],
+                'empty_data' => ''
+            ])
             ->add('regularPrice', NumberType::class)
             ->add('memberPrice', NumberType::class)
             ->add('Submit', SubmitType::class);

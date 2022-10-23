@@ -43,7 +43,7 @@
 
     <div class="main">
         <div class="thumbnail">
-            <img class="backgroundImage" src={{ design.backgroundImage }} />
+            <img class="backgroundImage" src="{% if design.backgroundImage is not null %}{{ asset('front/' ~ design.backgroundImage ) }}{% else %}{{ asset( 'background.jpg' ) }}{% endif %}" />
 
             <p class="backgroundText">{{ design.title }}</p>
         </div>
@@ -57,15 +57,17 @@
                     {% for product in products %}
                         <div class="productCard" id="{{ product.id }}">
                             <p class="productTitle" style="display: none;">{{ product.title }}</p>
-                            <img class="productImage" src="{{ product.image }}" alt="{{ product.title }}"/>
+                            <img class="productImage"
+                                 src="{% if product.image is not null %}{{ asset('products/' ~ product.image ) }}{% else %}{{ asset( 'noimage.jpg' ) }}{% endif %}"
+                                 alt="{{ product.title }}"/>
                             <p class="productDescription">{{ product.description }}</p>
 
-                            <div class="regularPrice">
+                            <div class="regularPrice {% if app.user %}member{% endif %}">
                                 <span>Regular price:</span>
                                 <p>{{ product.regularPrice }}</p>
                             </div>
 
-                            <div class="memberPrice">
+                            <div class="memberPrice {% if app.user is empty %}member{% endif %}">
                                 <span>Member price:</span>
                                 <p>{{ product.memberPrice }}</p>
                             </div>

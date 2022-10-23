@@ -14,7 +14,6 @@ class ProductFixtures extends Fixture
             [
                 'title' => 'Banana',
                 'description' => 'A very tasty banana',
-                'image' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Banana-Single.jpg/2324px-Banana-Single.jpg',
                 'regularPrice' => 2.99,
                 'memberPrice' => 1.99,
                 'displayOrder' => 1
@@ -22,7 +21,6 @@ class ProductFixtures extends Fixture
             [
                 'title' => 'Orange',
                 'description' => 'A nice orange color fruit',
-                'image' => 'https://www.e-fresco.io/pub/media/catalog/product/o/r/orange_4.jpg',
                 'regularPrice' => 1.99,
                 'memberPrice' => 0.69,
                 'displayOrder' => 2
@@ -30,7 +28,6 @@ class ProductFixtures extends Fixture
             [
                 'title' => 'Orange',
                 'description' => 'A nice orange color fruit',
-                'image' => 'https://www.e-fresco.io/pub/media/catalog/product/o/r/orange_4.jpg',
                 'regularPrice' => 1.99,
                 'memberPrice' => 0.69,
                 'displayOrder' => 3
@@ -38,7 +35,6 @@ class ProductFixtures extends Fixture
             [
                 'title' => 'Orange',
                 'description' => 'A nice orange color fruit',
-                'image' => 'https://www.e-fresco.io/pub/media/catalog/product/o/r/orange_4.jpg',
                 'regularPrice' => 1.99,
                 'memberPrice' => 0.69,
                 'displayOrder' => 4
@@ -46,7 +42,6 @@ class ProductFixtures extends Fixture
             [
                 'title' => 'Orange',
                 'description' => 'A nice orange color fruit',
-                'image' => 'https://www.e-fresco.io/pub/media/catalog/product/o/r/orange_4.jpg',
                 'regularPrice' => 1.99,
                 'memberPrice' => 0.69,
                 'displayOrder' => 5
@@ -54,7 +49,6 @@ class ProductFixtures extends Fixture
             [
                 'title' => 'Orange',
                 'description' => 'A nice orange color fruit',
-                'image' => 'https://www.e-fresco.io/pub/media/catalog/product/o/r/orange_4.jpg',
                 'regularPrice' => 1.99,
                 'memberPrice' => 0.69,
                 'displayOrder' => 6
@@ -62,7 +56,6 @@ class ProductFixtures extends Fixture
             [
                 'title' => 'Orange',
                 'description' => 'A nice orange color fruit',
-                'image' => 'https://www.e-fresco.io/pub/media/catalog/product/o/r/orange_4.jpg',
                 'regularPrice' => 1.99,
                 'memberPrice' => 0.69,
                 'displayOrder' => 7
@@ -70,7 +63,6 @@ class ProductFixtures extends Fixture
             [
                 'title' => 'Orange',
                 'description' => 'A nice orange color fruit',
-                'image' => 'https://www.e-fresco.io/pub/media/catalog/product/o/r/orange_4.jpg',
                 'regularPrice' => 1.99,
                 'memberPrice' => 0.69,
                 'displayOrder' => 8
@@ -78,7 +70,6 @@ class ProductFixtures extends Fixture
             [
                 'title' => 'Orange',
                 'description' => 'A nice orange color fruit',
-                'image' => 'https://www.e-fresco.io/pub/media/catalog/product/o/r/orange_4.jpg',
                 'regularPrice' => 1.99,
                 'memberPrice' => 0.69,
                 'displayOrder' => 9
@@ -86,7 +77,6 @@ class ProductFixtures extends Fixture
             [
                 'title' => 'Orange',
                 'description' => 'A nice orange color fruit',
-                'image' => 'https://www.e-fresco.io/pub/media/catalog/product/o/r/orange_4.jpg',
                 'regularPrice' => 1.99,
                 'memberPrice' => 0.69,
                 'displayOrder' => 10
@@ -94,7 +84,6 @@ class ProductFixtures extends Fixture
             [
                 'title' => 'Orange',
                 'description' => 'A nice orange color fruit',
-                'image' => 'https://www.e-fresco.io/pub/media/catalog/product/o/r/orange_4.jpg',
                 'regularPrice' => 1.99,
                 'memberPrice' => 0.69,
                 'displayOrder' => 11
@@ -102,7 +91,6 @@ class ProductFixtures extends Fixture
             [
                 'title' => 'Orange',
                 'description' => 'A nice orange color fruit',
-                'image' => 'https://www.e-fresco.io/pub/media/catalog/product/o/r/orange_4.jpg',
                 'regularPrice' => 1.99,
                 'memberPrice' => 0.69,
                 'displayOrder' => 12

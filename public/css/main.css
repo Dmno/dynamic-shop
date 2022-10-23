@@ -106,13 +106,12 @@ body {
     display: flex;
     flex-direction: row;
     width: 100%;
-    align-items: center;
     justify-content: space-between;
     line-height: 0;
     height: 14px;
 }
 
-.regularPrice p {
+.member p {
     text-decoration: line-through;
 }
 

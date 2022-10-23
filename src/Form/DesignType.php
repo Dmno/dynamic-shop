@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -15,7 +16,17 @@ class DesignType extends AbstractType
         $builder
             ->add('title', TextType::class)
             ->add('logo', TextType::class)
-            ->add('backgroundImage', TextType::class)
+            ->add('imageUpload', FileType::class, [
+                'mapped' => false,
+                'required' => false,
+                'label' => 'Background image',
+                'attr' => [
+                    'autocomplete' => 'off',
+                    'class' => 'image-type-selector',
+                    'id' => 'icon-select',
+                ],
+                'empty_data' => ''
+            ])
             ->add('pageColor', TextType::class)
             ->add('textColor', TextType::class)
             ->add('secondaryTextColor', TextType::class)

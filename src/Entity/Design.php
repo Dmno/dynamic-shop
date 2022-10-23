@@ -19,9 +19,6 @@ class Design
     #[ORM\Column(length: 255)]
     private ?string $logo = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $backgroundImage = null;
-
     #[ORM\Column(length: 20, nullable: true)]
     private ?string $pageColor = null;
 
@@ -52,6 +49,9 @@ class Design
     #[ORM\Column(nullable: true)]
     private ?int $productCount = 0;
 
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?Image $backgroundImage = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -79,16 +79,20 @@ class Design
         return $this;
     }
 
-    public function getBackgroundImage(): ?string
+    /**
+     * @return Image|null
+     */
+    public function getBackgroundImage(): ?Image
     {
         return $this->backgroundImage;
     }
 
-    public function setBackgroundImage(string $backgroundImage): self
+    /**
+     * @param Image|null $backgroundImage
+     */
+    public function setBackgroundImage(?Image $backgroundImage): void
     {
         $this->backgroundImage = $backgroundImage;
-
-        return $this;
     }
 
     public function getPageColor(): ?string

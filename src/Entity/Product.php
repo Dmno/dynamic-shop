@@ -19,8 +19,8 @@ class Product
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $image = null;
+    #[ORM\ManyToOne(inversedBy: 'products')]
+    private ?Image $image = null;
 
     #[ORM\Column(nullable: true)]
     private ?float $regularPrice = null;
@@ -60,16 +60,20 @@ class Product
         return $this;
     }
 
-    public function getImage(): ?string
+    /**
+     * @return Image|null
+     */
+    public function getImage(): ?Image
     {
         return $this->image;
     }
 
-    public function setImage(?string $image): self
+    /**
+     * @param Image|null $image
+     */
+    public function setImage(?Image $image): void
     {
         $this->image = $image;
-
-        return $this;
     }
 
     public function getRegularPrice(): ?float
