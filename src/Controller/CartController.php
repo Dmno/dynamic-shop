@@ -43,14 +43,10 @@ class CartController extends AbstractController
             $cart->setProducts($products);
             $this->em->persist($cart);
             $this->em->flush();
-        } else {
-            if ($request->isXMLHttpRequest()) {
-                return new JsonResponse(['user' => false]);
-            }
         }
 
         if ($request->isXMLHttpRequest()) {
-            return new JsonResponse(['user' => true]);
+            return new JsonResponse(['user' => $userId ?? false]);
         }
         return true;
     }
@@ -76,13 +72,30 @@ class CartController extends AbstractController
                 $this->em->persist($cart);
                 $this->em->flush();
             }
-
-        } else if ($request->isXMLHttpRequest()) {
-            return new JsonResponse(['user' => false]);
         }
 
         if ($request->isXMLHttpRequest()) {
-            return new JsonResponse(['user' => true]);
+            return new JsonResponse(['user' => $userId ?? false]);
+        }
+        return true;
+    }
+
+    #[Route('/clear', name: 'cart_clear')]
+    public function clearCart(Request $request)
+    {
+        $userId = $request->request->get('userId');
+
+        if ($userId) {
+            $user = $this->userRepository->findOneBy(['id' => $userId]);
+
+            $cart = $user->getCart();
+
+            $this->em->remove($cart);
+            $this->em->flush();
+        }
+
+        if ($request->isXMLHttpRequest()) {
+            return new JsonResponse(['user' => $userId ?? false]);
         }
         return true;
     }

@@ -14,7 +14,7 @@ class Cart
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToOne(inversedBy: 'cart', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(inversedBy: 'cart')]
     private ?User $userId = null;
 
     #[ORM\Column(type: Types::ARRAY, nullable: true)]

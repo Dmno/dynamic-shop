@@ -16,17 +16,36 @@
         <img class="logo" alt="{{ design.title}}" src={{ design.logo }} />
 
         <div class="cart">
-            *Cart logo*
-            <div class="cartContent">
+            {% set cartItemCount = cart|length %}
+            Items in cart - <span class="totalCartItems">{{ cartItemCount }}</span>
+            {% if cartItemCount %}
+                <button class="btn btn-sm btn-success cartDisplay">Open cart</button>
+            {% endif %}
+
+            <div class="cartContent" style="display: none;">
+                <div class="cartProducts">
+                    {% if cart is not empty %}
+                        {% for product in cart %}
+                            <div class="cartProduct">
+                                <span>{{ product.title }}</span>
+                                {#                                {{ product.count }}#}
+                                <p id="cartProductPrice{{ product.id }}">
+                                    {% if app.user %}
+                                        {{ product.memberPriceTotal }}
+                                    {% else %}
+                                        {{ product.regularPriceTotal }}
+                                    {% endif %}
+                                </p>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
                 {% if cart is not empty %}
-                    {% for product in cart %}
-                        <div class="cartProduct">
-                            {{ product.title }}
-                            {{ product.count }}
-                        </div>
-                    {% endfor %}
-                {% else %}
-                    <p>Cart is empty</p>
+                    <span class="text-center totalPrice">Total price: {{ cartTotal }}</span>
+                    <div class="cartButtons">
+                        <button class="btn btn-secondary btn-sm clearCart">Clear cart</button>
+                        <button class="btn btn-primary btn-sm checkout">Checkout</button>
+                    </div>
                 {% endif %}
             </div>
         </div>
@@ -56,24 +75,24 @@
                 <div class="productGrid">
                     {% for product in products %}
                         <div class="productCard" id="{{ product.id }}">
-                            <p class="productTitle" style="display: none;">{{ product.title }}</p>
-                            <img class="productImage"
+                            <p class="productTitle" id="productTitle{{ product.id }}" style="display: none;">{{ product.title }}</p>
+                            <img class="productImage" id="productImage{{ product.id }}"
                                  src="{% if product.image is not null %}{{ asset('products/' ~ product.image ) }}{% else %}{{ asset( 'noimage.jpg' ) }}{% endif %}"
                                  alt="{{ product.title }}"/>
                             <p class="productDescription">{{ product.description }}</p>
 
-                            <div class="regularPrice {% if app.user %}member{% endif %}">
+                            <div class="regularPrice {% if app.user %}member{% endif %}" id="regularPrice{{ product.id }}">
                                 <span>Regular price:</span>
                                 <p>{{ product.regularPrice }}</p>
                             </div>
 
-                            <div class="memberPrice {% if app.user is empty %}member{% endif %}">
+                            <div class="memberPrice {% if app.user is empty %}member{% endif %}" id="memberPrice{{ product.id }}">
                                 <span>Member price:</span>
                                 <p>{{ product.memberPrice }}</p>
                             </div>
 
-                            <button class="addToCart" id="{{ product.id }}">Add to cart</button>
-                            <button class="removeFromCart" id="{{ product.id }}">Remove from cart</button>
+                            <button class="btn btn-sm btn-success addToCart" id="{{ product.id }}">Add to cart</button>
+                            <button class="btn btn-sm btn-success removeFromCart" id="{{ product.id }}">Remove from cart</button>
                         </div>
                     {% endfor %}
                 </div>

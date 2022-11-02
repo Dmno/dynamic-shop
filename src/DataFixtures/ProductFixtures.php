@@ -101,7 +101,6 @@ class ProductFixtures extends Fixture
             $product = new Product();
             $product->setTitle($item['title']);
             $product->setDescription($item['description']);
-            $product->setImage($item['image']);
             $product->setRegularPrice($item['regularPrice']);
             $product->setMemberPrice($item['memberPrice']);
             $product->setDisplayOrder($item['displayOrder']);

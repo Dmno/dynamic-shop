@@ -25,11 +25,17 @@ class IndexController extends AbstractController
     public function index(): Response
     {
         $cartProducts = [];
+        $cartTotal = 0;
         if ($this->getUser()) {
             /** @var Cart $cart */
             $cart = $this->cartRepository->findOneBy(['userId' => $this->getUser()]);
             if ($cart) {
                 $cartProducts = $this->productRepository->findAllById($cart->getProducts());
+
+                foreach ($cartProducts as $cartProduct) {
+                    $cartTotal += $cartProduct['memberPriceTotal'];
+                }
+
             }
         }
 
@@ -39,7 +45,8 @@ class IndexController extends AbstractController
         return $this->render('main/index.html.twig', [
             'design' => $design,
             'products' => $this->productRepository->getProductsWithLimitAndOrder($design['productCount']),
-            'cart' => $cartProducts
+            'cart' => $cartProducts,
+            'cartTotal' => $cartTotal
         ]);
     }
 }

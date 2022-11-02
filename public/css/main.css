@@ -162,10 +162,38 @@ body {
     }
 }
 
+/* CART */
 
-/*@media (min-width: 768px) {*/
-/*    body {*/
-/*        display: flex;*/
-/*        flex-direction: column;*/
-/*    }*/
-/*}*/
+.cart {
+    z-index: 100;
+}
+
+.cartContent {
+    position: absolute;
+    width: 250px;
+    background-color: red;
+    border-radius: 5px;
+}
+
+.cartButtons {
+    display: flex;
+    justify-content: space-around;
+}
+
+.cartProducts {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 20px 0;
+}
+
+.cartProduct {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    height: 30px;
+}
+
+.totalPrice {
+    display: block;
+    padding: 5px;
+}

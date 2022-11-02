@@ -67,11 +67,14 @@ class ProductRepository extends ServiceEntityRepository
 
         $productCount = array_count_values($productIds);
 
+        $productsWithCount = [];
         foreach ($products as $product) {
-            $product->count = $productCount[$product->getId()];
+            $product['count'] = $productCount[$product['id']];
+            $product['memberPriceTotal'] = $product['count'] * $product['memberPrice'];
+            $productsWithCount[] = $product;
         }
 
-        return $products;
+        return $productsWithCount;
     }
 
     /**
