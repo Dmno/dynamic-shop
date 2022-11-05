@@ -36,7 +36,6 @@ class RegisterType extends AbstractType
             ->add('email', TextType::class, [
                 'attr' => array(
                     'autocomplete' => 'off',
-                    'autofocus' => true
                 ),
                 'constraints' => [
                     new NotBlank([

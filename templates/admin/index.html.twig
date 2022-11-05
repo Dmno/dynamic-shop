@@ -9,9 +9,13 @@
         {% include 'admin/messages.html.twig' %}
 
         <div class="content">
-            {{ design.id }}
-
-            <a href="{{ path('edit_design', {'id': design.id}) }}">Edit design</a>
+            <h2>Main page design updating</h2>
+            <b>This data controls the entire main page look, so make sure it is correct!</b>
+            <div style="margin-top: 20px;">
+                <a href="{{ path('edit_design', {'id': design.id}) }}">
+                    <button class="btn btn-sm btn-primary ml-1">Edit design</button>
+                </a>
+            </div>
         </div>
     </div>
 {% endblock %}

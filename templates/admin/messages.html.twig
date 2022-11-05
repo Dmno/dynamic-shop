@@ -1,7 +1,7 @@
 {% for label, messages in app.flashes() %}
     {% for message in messages %}
         <div class="text-center">
-            <div class="alert alert-{{ label }}" style="display: inline-block">
+            <div class="alert alert-{{ label }}" style="display: inline-block; min-width: 200px; padding: 10px;">
                 {{ message }}
             </div>
         </div>

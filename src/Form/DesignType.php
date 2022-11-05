@@ -13,6 +13,9 @@ class DesignType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $backgroundImageObject = $options['data']->getBackgroundImage();
+        $backgroundImageTitle = $backgroundImageObject ? $backgroundImageObject->getTitle() : "";
+
         $builder
             ->add('title', TextType::class)
             ->add('logo', TextType::class)
@@ -24,6 +27,7 @@ class DesignType extends AbstractType
                     'autocomplete' => 'off',
                     'class' => 'image-type-selector',
                     'id' => 'icon-select',
+                    'placeholder' => $backgroundImageTitle
                 ],
                 'empty_data' => ''
             ])

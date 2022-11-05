@@ -8,6 +8,7 @@ use App\Form\DesignType;
 use App\Form\ProductType;
 use App\Repository\DesignRepository;
 use App\Repository\ProductRepository;
+use App\Repository\UserRepository;
 use App\Service\ImageService;
 use App\Service\ProductOrder;
 use Doctrine\ORM\EntityManagerInterface;
@@ -26,7 +27,8 @@ class AdminController extends AbstractController
         private DesignRepository $designRepository,
         private ProductRepository $productRepository,
         private ProductOrder $productOrder,
-        private ImageService $imageService
+        private ImageService $imageService,
+        private UserRepository $userRepository
     )
     {
     }
@@ -50,6 +52,36 @@ class AdminController extends AbstractController
             'products' => $this->productRepository->findProductsPaginatedWithSearch(self::PAGE_LIMIT, $request->query->get('query'), $request->query->get('page')),
             'design' => $this->designRepository->getDesignProductLimit()
         ]);
+    }
+
+    #[Route('/users', name: 'admin_users')]
+    public function userPage(Request $request)
+    {
+        return $this->render('admin/users.html.twig', [
+            'users' => $this->userRepository->findAll(),
+        ]);
+    }
+
+    #[Route('/user/delete/{id}', name: 'admin_user_delete')]
+    public function userDelete(Request $request, int $id): Response
+    {
+        $user = $this->userRepository->findOneBy(['id' => $id]);
+        $message = ["warning", "User does not exist"];
+
+        if ($user) {
+            if ($user->getCart()) {
+                $this->em->remove($user->getCart());
+                $this->em->persist($user);
+            }
+
+            $this->em->remove($user);
+            $this->em->flush();
+
+            $message = ["success", "User has been deleted"];
+        }
+
+        $this->addFlash($message[0], $message[1]);
+        return $this->redirectToRoute('admin_users');
     }
 
     #[Route('/products/order', name: 'product_order')]
@@ -85,7 +117,7 @@ class AdminController extends AbstractController
             $this->em->persist($product);
             $this->em->flush();
 
-            $this->addFlash('success', 'Saved!');
+            $this->addFlash('success', 'Product ' . $product->getTitle() . ' has been created!' );
             return $this->redirectToRoute('admin_products');
         }
 
@@ -149,7 +181,8 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if (isset($form['imageUpload'])) {
+            $imageObject = $form['imageUpload']->getData();
+            if ($imageObject) {
                 $image = $this->imageService->checkAndProcessFile($form['imageUpload']->getData(), false);
                 $design->setBackgroundImage($image);
             }

@@ -72,6 +72,10 @@
     margin-bottom: 10px;
 }
 
+.userTable {
+    max-width: 90%;
+}
+
 @media screen and (max-height: 450px) {
     .menuSidebar {padding-top: 15px;}
     .menuSidebar a {font-size: 18px;}

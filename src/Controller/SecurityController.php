@@ -28,8 +28,9 @@ class SecurityController extends AbstractController
     }
 
     #[Route(path: '/login', name: 'app_login')]
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function login(Request $request, AuthenticationUtils $authenticationUtils): Response
     {
+        $email = $request->get('email');
         // if ($this->getUser()) {
         //     return $this->redirectToRoute('target_path');
         // }
@@ -37,7 +38,7 @@ class SecurityController extends AbstractController
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
-        $lastUsername = $authenticationUtils->getLastUsername();
+        $lastUsername = $email ?: $authenticationUtils->getLastUsername();
 
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
@@ -77,12 +78,11 @@ class SecurityController extends AbstractController
     public function register(Request $request, UserPasswordHasherInterface $passwordHasher)
     {
         $user = new User();
-        $form = $this->createForm(RegisterType::class, $user, [
-            'action' => $this->generateUrl('app_register'),
-        ]);
+        $form = $this->createForm(RegisterType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $userCount = count($this->userRepository->findAll());
             $duplicateUser = $this->userRepository->findOneBy(['username' => $form->get('username')->getData()]);
             $duplicateEmail = $this->userRepository->findOneBy(['email' => $form->get('email')->getData()]);
 
@@ -94,13 +94,19 @@ class SecurityController extends AbstractController
                     )
                 );
 
-                $user->setRoles(['ROLE_USER']);
+                $userRole = ['ROLE_USER'];
+                if (!$userCount) {
+                    $userRole = ['ROLE_ADMIN'];
+                }
+                $user->setRoles($userRole);
 
                 $this->em->persist($user);
                 $this->em->flush();
 
                 $this->addFlash('success', 'User ' . $user->getUsername() . ' created, you can now sign in');
-                return $this->redirectToRoute('main');
+                return $this->redirectToRoute('app_login', [
+                    'email' => $user->getEmail()
+                ]);
             }
 
             $message = "This username already exists";
@@ -111,7 +117,7 @@ class SecurityController extends AbstractController
             return $this->redirectToRoute('app_register');
         }
 
-        return $this->render('_modal.html.twig', [
+        return $this->render('security/register.html.twig', [
             'form' => $form->createView(),
             'title' => 'Register'
         ]);

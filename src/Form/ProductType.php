@@ -13,6 +13,9 @@ class ProductType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $imageObject = $options['data']->getImage();
+        $imageTitle = $imageObject ? $imageObject->getTitle() : "";
+
         $builder
             ->add('title', TextType::class)
             ->add('description', TextType::class)
@@ -24,6 +27,7 @@ class ProductType extends AbstractType
                     'autocomplete' => 'off',
                     'class' => 'image-type-selector',
                     'id' => 'icon-select',
+                    'placeholder' => $imageTitle
                 ],
                 'empty_data' => ''
             ])

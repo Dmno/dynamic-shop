@@ -8,8 +8,10 @@
 
         {% include 'admin/messages.html.twig' %}
 
-        <div class="content">
-            <a href="{{ path('product_add') }}">Add product</a>
+        <div class="content text-center">
+            <a href="{{ path('product_add') }}">
+                <button class="btn btn-sm btn-primary ml-1">Add product</button>
+            </a>
 
             {% if products is not empty %}
                 <b class="disclaimer text-center">!Changing product order automatically orders the products in the main page!</b>
@@ -48,6 +50,7 @@
                         <th>Image</th>
                         <th>Regular price</th>
                         <th>Member price</th>
+                        <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody>
