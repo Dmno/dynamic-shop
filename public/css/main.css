@@ -20,6 +20,13 @@ body {
     padding: 0 10px;
 }
 
+@media (max-width: 450px) {
+    .header {
+        flex-direction: column;
+        row-gap: 20px;
+    }
+}
+
 .main {
     grid-area: main;
 }
@@ -63,6 +70,7 @@ body {
     position: relative;
     max-width: 1200px;
     margin: auto;
+    padding: 20px 0;
 }
 
 .productsTitle {
@@ -128,9 +136,9 @@ body {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    column-gap: 20px;
+    padding: 0 20px;
 }
 
 .footerItem {
@@ -148,12 +156,33 @@ body {
     flex: 1 1 30%;
 }
 
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.footerQuestions, .footerContact {
+    font-weight: 500;
+}
+
 .copyright {
     display: block;
     width: 100%;
     height: 50px;
     text-align: center;
     padding-top: 50px;
+}
+
+@media (max-width: 800px) {
+    .footerContainer {
+        flex-direction: column;
+        margin: auto;
+        row-gap: 20px;
+    }
+
+    .footerItem .logo {
+        margin: auto;
+    }
 }
 
 @media (max-width: 768px) {
@@ -196,4 +225,70 @@ body {
 .totalPrice {
     display: block;
     padding: 5px;
+}
+
+/* Checkout */
+
+.checkoutBlock {
+    display: flex;
+    flex-direction: column;
+    background-color: blue;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.checkoutLogo {
+    max-height: 100px;
+}
+
+.checkoutProducts {
+    display: flex;
+    flex-direction: column;
+    width: 85%;
+    row-gap: 20px;
+    padding-top: 20px;
+}
+
+.checkoutTitle {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.checkoutProductCard {
+    display: flex;
+    flex-direction: row;
+}
+
+.checkoutProductLine {
+    border: solid 1px #f8f9fa;
+    border-radius: 10px;
+}
+
+.checkoutProductImage {
+    max-width: 250px;
+}
+
+.checkoutProductInfo {
+    width: 70%;
+    text-align: center;
+}
+
+.checkoutProductCountAndPrice {
+    min-width: 100px;
+}
+
+.checkoutTotalPrice, .checkoutButtons {
+    display: flex;
+    flex-direction: row;
+    width: 85%;
+}
+
+.checkoutTotalPrice {
+    justify-content: flex-end;
+}
+
+.checkoutButtons {
+    justify-content: space-between;
+    margin: 10px 0;
 }

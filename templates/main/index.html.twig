@@ -13,7 +13,7 @@
     </style>
 
     <div class="header">
-        <img class="logo" alt="{{ design.title}}" src={{ design.logo }} />
+        <img class="logo" alt="{{ design.title}}" src="{% if design.logo is not null %}{{ asset('front/' ~ design.logo ) }}{% else %}{{ asset( 'logo.png' ) }}{% endif %}" />
 
         <div class="cart">
             {% set cartItemCount = cart|length %}
@@ -28,7 +28,6 @@
                         {% for product in cart %}
                             <div class="cartProduct" id="cartProduct{{ product.id }}">
                                 <span>{{ product.title }}</span>
-                                {#{{ product.count }}#}
                                 <p id="cartProductPrice{{ product.id }}">
                                     {% if app.user %}
                                         {{ product.memberPriceTotal }}
@@ -44,14 +43,15 @@
                     <span class="text-center totalPrice">Total price: {{ cartTotal }}</span>
                     <div class="cartButtons">
                         <button class="btn btn-secondary btn-sm clearCart">Clear cart</button>
-                        <button class="btn btn-primary btn-sm checkout">Checkout</button>
+                        <a href="{{ path("checkout_main") }}">
+                            <button class="btn btn-primary btn-sm checkout">Checkout</button>
+                        </a>
                     </div>
                 {% endif %}
             </div>
         </div>
         <div class="auth">
             {% if app.user %}
-                <i class="userId" id="{{ app.user.id }}" style="display: none;"></i>
                 <a href="{{ path('app_logout')}}">Logout</a>
             {% else %}
                 <a href="{{ path('app_login')}}">Login</a>
@@ -103,11 +103,11 @@
     <div class="footer">
         <div class="footerContainer">
             <div class="footerItem">
-                <img class="logo" alt="{{ design.title}}" src={{ design.logo }} />
+                <img class="logo" alt="{{ design.title}}" src="{% if design.logo is not null %}{{ asset('front/' ~ design.logo ) }}{% else %}{{ asset( 'logo.png' ) }}{% endif %}" />
             </div>
 
             <div class="footerItem">
-                Questions? Comments?
+                <p class="footerQuestions">QUESTIONS? COMMENTS?</p>
                 <ul>
                     <li>{{ design.phoneNumber }}</li>
                     <li>24 hours a day, 7 days a week or <a href="sms:{{ design.phoneNumber }}">send us a message</a></li>
@@ -115,7 +115,7 @@
             </div>
 
             <div class="footerItem">
-                Contact Address
+                <p class="footerContact">CONTACT ADDRESS</p>
                 <ul>
                     <li>{{ design.companyName }}</li>
                     <li>{{ design.address }}</li>
@@ -128,5 +128,8 @@
         <div class="copyright">
             {{ design.copyright }}
         </div>
+        {% if app.user %}
+            <i class="userId" id="{{ app.user.id }}" style="display: none;"></i>
+        {% endif %}
     </div>
 {% endblock %}

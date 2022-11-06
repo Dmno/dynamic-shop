@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <style>
+        body {
+            background-color: {{ design.pageColor }};
+            color: {{ design.textColor }};
+            padding: 100px;
+        }
+
+        a {
+            color: {{ design.secondaryTextColor }};
+        }
+    </style>
+
+    <div class="checkoutBlock">
+        <img class="checkoutLogo" alt="{{ design.title}}" src="{% if design.logo is not null %}{{ asset('front/' ~ design.logo ) }}{% else %}{{ asset( 'logo.png' ) }}{% endif %}" />
+
+        <h3 class="checkoutTitle">Your cart</h3>
+
+        <div class="checkoutTotalPrice">
+            <a href="#checkout">
+                <button class="btn btn-sm btn-primary ml-1" style="margin-right: 20px;">Proceed to checkout</button>
+            </a>
+
+            Subtotal ({{ cartTotalItems }}{% if cartTotalItems > 1 %} items{% else %} item{% endif %}): {{ cartTotal }}
+        </div>
+
+        <div class="checkoutProducts">
+            {% for cartItem in cart %}
+                <hr class="checkoutProductLine">
+                <div class="checkoutProductCard">
+                    <img class="checkoutProductImage" id="checkoutProductImage{{ cartItem.id }}"
+                         src="{% if cartItem.image is not null %}{{ asset('products/' ~ cartItem.image ) }}{% else %}{{ asset( 'noimage.jpg' ) }}{% endif %}"
+                         alt="{{ cartItem.title }}"/>
+                    <div class="checkoutProductInfo">
+                        <p class="checkoutProductTitle" id="productTitle{{ cartItem.id }}">{{ cartItem.title }}</p>
+                        <p class="productDescription">{{ cartItem.description }}</p>
+                    </div>
+
+                    <div class="checkoutProductCountAndPrice">
+                        <p class="checkoutProductCount">Quantity: {{ cartItem.count }}</p>
+                        <p class="checkoutProductPrice">Price:
+                            {% if app.user %}
+                                {{ cartItem.memberPriceTotal }}
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="checkoutTotalPrice">
+            Subtotal ({{ cartTotalItems }}{% if cartTotalItems > 1 %} items{% else %} item{% endif %}): {{ cartTotal }}
+        </div>
+
+        <div class="checkoutButtons">
+            <a href="{{ path('main') }}">
+                <button class="btn btn-sm btn-danger ml-1">Cancel</button>
+            </a>
+
+            <a href="#checkout">
+                <button class="btn btn-sm btn-primary ml-1">Proceed to checkout</button>
+            </a>
+        </div>
+    </div>
+{% endblock %}

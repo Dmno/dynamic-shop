@@ -16,8 +16,8 @@ class Design
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $title = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $logo = null;
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?Image $logoImage = null;
 
     #[ORM\Column(length: 20, nullable: true)]
     private ?string $pageColor = null;
@@ -67,14 +67,14 @@ class Design
         $this->title = $title;
     }
 
-    public function getLogo(): ?string
+    public function getLogoImage(): ?Image
     {
-        return $this->logo;
+        return $this->logoImage;
     }
 
-    public function setLogo(string $logo): self
+    public function setLogoImage(?Image $logoImage): self
     {
-        $this->logo = $logo;
+        $this->logoImage = $logoImage;
 
         return $this;
     }

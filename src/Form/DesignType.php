@@ -13,13 +13,27 @@ class DesignType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $logoImageObject = $options['data']->getLogoImage();
+        $logoImageTitle = $logoImageObject ? $logoImageObject->getTitle() : "";
+
         $backgroundImageObject = $options['data']->getBackgroundImage();
         $backgroundImageTitle = $backgroundImageObject ? $backgroundImageObject->getTitle() : "";
 
         $builder
             ->add('title', TextType::class)
-            ->add('logo', TextType::class)
             ->add('imageUpload', FileType::class, [
+                'mapped' => false,
+                'required' => false,
+                'label' => 'Logo image',
+                'attr' => [
+                    'autocomplete' => 'off',
+                    'class' => 'image-type-selector',
+                    'id' => 'icon-select',
+                    'placeholder' => $logoImageTitle
+                ],
+                'empty_data' => ''
+            ])
+            ->add('backgroundImageUpload', FileType::class, [
                 'mapped' => false,
                 'required' => false,
                 'label' => 'Background image',

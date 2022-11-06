@@ -24,29 +24,71 @@ class IndexController extends AbstractController
     #[Route('/', name: 'main')]
     public function index(): Response
     {
-        $cartProducts = [];
-        $cartTotal = 0;
-        if ($this->getUser()) {
-            /** @var Cart $cart */
-            $cart = $this->cartRepository->findOneBy(['userId' => $this->getUser()]);
-            if ($cart) {
-                $cartProducts = $this->productRepository->findAllById($cart->getProducts());
-
-                foreach ($cartProducts as $cartProduct) {
-                    $cartTotal += $cartProduct['memberPriceTotal'];
-                }
-
-            }
+        $cartProducts = $this->getCartProducts();
+        $cartTotals = [];
+        if ($cartProducts) {
+            $cartTotals = $this->getCartTotal($cartProducts);
         }
 
-        /** @var Design $design */
-        $design = $this->designRepository->getDesignWithJoins();
+        $design = $this->getDesign();
 
         return $this->render('main/index.html.twig', [
             'design' => $design,
             'products' => $this->productRepository->getProductsWithLimitAndOrder($design['productCount']),
             'cart' => $cartProducts,
-            'cartTotal' => $cartTotal
+            'cartTotal' => $cartTotals['price']
         ]);
+    }
+
+    #[Route('/checkout', name: 'checkout_main')]
+    public function checkoutMain(): Response
+    {
+        $cartProducts = $this->getCartProducts();
+        $cartTotals = [];
+        if ($cartProducts) {
+            $cartTotals = $this->getCartTotal($cartProducts);
+        }
+
+        return $this->render('main/checkout.html.twig', [
+            'design' => $this->getDesign(),
+            'cart' => $cartProducts,
+            'cartTotal' => $cartTotals['price'],
+            'cartTotalItems' => $cartTotals['count']
+        ]);
+    }
+
+    private function getCartProducts(): array
+    {
+        $cartProducts = [];
+
+        if ($this->getUser()) {
+            /** @var Cart $cart */
+            $cart = $this->cartRepository->findOneBy(['userId' => $this->getUser()]);
+            if ($cart) {
+                $cartProducts = $this->productRepository->findAllById($cart->getProducts());
+            }
+        }
+
+        return $cartProducts;
+    }
+
+    private function getCartTotal(array $cartProducts): array
+    {
+        $cartTotalPrice = 0;
+        $cartTotalCount = 0;
+        foreach ($cartProducts as $cartProduct) {
+            $cartTotalPrice += $cartProduct['memberPriceTotal'];
+            $cartTotalCount += $cartProduct['count'];
+        }
+        return [
+            'price' => $cartTotalPrice,
+            'count' => $cartTotalCount
+        ];
+    }
+
+    private function getDesign(): array
+    {
+        /** @var Design $design */
+        return $this->designRepository->getDesignWithJoins();
     }
 }

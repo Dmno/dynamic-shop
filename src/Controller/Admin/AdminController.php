@@ -103,7 +103,7 @@ class AdminController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             if (isset($form['imageUpload'])) {
-                $image = $this->imageService->checkAndProcessFile($form['imageUpload']->getData(), true);
+                $image = $this->imageService->checkAndProcessFile($form['imageUpload']->getData(), true, false);
                 $product->setImage($image);
             }
             $lastOrderItem = $this->productRepository->findOneBy([], ['displayOrder' => 'DESC']);
@@ -138,7 +138,7 @@ class AdminController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             if (isset($form['imageUpload'])) {
-                $image = $this->imageService->checkAndProcessFile($form['imageUpload']->getData(), true);
+                $image = $this->imageService->checkAndProcessFile($form['imageUpload']->getData(), true, false);
                 $product->setImage($image);
             }
             $this->em->flush();
@@ -181,9 +181,15 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $imageObject = $form['imageUpload']->getData();
-            if ($imageObject) {
-                $image = $this->imageService->checkAndProcessFile($form['imageUpload']->getData(), false);
+            $logoImageObject = $form['imageUpload']->getData();
+            if ($logoImageObject) {
+                $image = $this->imageService->checkAndProcessFile($logoImageObject, false);
+                $design->setLogoImage($image);
+            }
+
+            $backgroundImageObject = $form['backgroundImageUpload']->getData();
+            if ($backgroundImageObject) {
+                $image = $this->imageService->checkAndProcessFile($backgroundImageObject, false);
                 $design->setBackgroundImage($image);
             }
             $this->em->flush();
