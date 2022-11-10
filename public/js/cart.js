@@ -42,20 +42,41 @@ $(document).ready(function () {
                 $('.cartContent').append(generalHtml);
             }
         } else {
-            let cartProductClass = $('.cartProducts');
+            let cart = [];
+            let cartProductClass = $('.cartProducts').children();
 
             // Create a session storage for cart products of a logged in user
-            if (cartProductClass.children().length > 0) {
+            if (cartProductClass.length > 0) {
                 cartProductClass.each(function () {
-                    console.log($(this));
+                    let currentClass = $(this).attr('id');
+                    let id = currentClass.replace('cartProduct','');
+                    let count = parseInt($('#cartProductTotal' + id).text());
+                    let memberPrice = $('#memberPrice' + id).find('p').text();
+                    let regularPrice = $('#regularPrice' + id).find('p').text();
+
+                    let newCartProduct = {
+                        "id": id,
+                        "title": $('#productTitle' + id).text,
+                        "image": $('#productImage' + id).prop('src'),
+                        "regularPrice": regularPrice,
+                        "memberPrice": memberPrice,
+                        "count": count,
+                        "total": parseFloat(priceCounter(userId, count, memberPrice, regularPrice))
+                    };
+
+                    cart.push(newCartProduct);
                 });
+
+                sessionStorage.setItem("cart", JSON.stringify(cart));
             }
         }
     };
 
     // Count item price
     function priceCounter(userId, itemCount, memberPrice, regularPrice) {
-        return userId ? itemCount * memberPrice : itemCount * regularPrice;
+        let result = userId ? itemCount * memberPrice : itemCount * regularPrice;
+
+        return result.toFixed(2);
     }
 
     // Add clicked item to cart
@@ -72,8 +93,6 @@ $(document).ready(function () {
             "memberPrice": $('#memberPrice' + productId).find('p').text()
         };
 
-
-
         let cart = JSON.parse(sessionStorage.getItem("cart"));
         let cartItemCount = $.isEmptyObject(cart) ? 0 : cart['length'];
 
@@ -86,15 +105,18 @@ $(document).ready(function () {
                     isDuplicate = true;
                     let itemCount = value['count']+1;
                     let currentItemPrice = priceCounter(userId, itemCount, value['memberPrice'], value['regularPrice']);
-                    totalPrice += currentItemPrice;
+                    totalPrice += parseFloat(currentItemPrice);
+                    console.log(totalPrice);
 
                     let duplicateCartItem = value;
                     duplicateCartItem['count'] = itemCount;
                     duplicateCartItem['total'] = currentItemPrice;
                     newCart.push(duplicateCartItem);
-                    $('#cartProductPrice' + value['id']).text(currentItemPrice.toFixed(2));
+                    $('#cartProductTotal' + value['id']).text(itemCount);
+                    $('#cartProductPrice' + value['id']).text(currentItemPrice);
                 } else {
-                    totalPrice += priceCounter(userId, value['count'], value['memberPrice'], value['regularPrice']);
+                    totalPrice += parseFloat(priceCounter(userId, value['count'], value['memberPrice'], value['regularPrice'])).toFixed(2);
+                    console.log(totalPrice);
                     newCart.push(value);
                 }
             });
@@ -110,13 +132,15 @@ $(document).ready(function () {
         if (!isDuplicate) {
             productArray['count'] = 1;
             productArray['total'] = priceCounter(userId, productArray['count'], productArray['memberPrice'], productArray['regularPrice']);
-            totalPrice += productArray['total'];
+            totalPrice += parseFloat(productArray['total']);
+            console.log(totalPrice);
             newCart.push(productArray);
 
             productHtml +=
                 '<div class="cartProduct" id="cartProduct'+ productArray['id'] +'">' +
-                '<span>'+productArray["title"]+'</span>' +
-                '<p id="cartProductPrice' + productArray['id'] +'">'+productArray['total'].toFixed(2)+'</p>' +
+                '<span>'+ productArray["title"] +'</span>' +
+                '<p id="cartProductTotal'+ productArray['id'] +'">'+ productArray['count'] +'</p>' +
+                '<p id="cartProductPrice'+ productArray['id'] +'">'+ productArray['total'] +'</p>' +
                 '</div>'
 
             $('.cartProducts').append(productHtml);
@@ -124,7 +148,7 @@ $(document).ready(function () {
 
         if (cartItemCount === 0 && productHtml) {
             generalHtml +=
-                '<span class="text-center totalPrice">Total price: '+totalPrice.toFixed(2)+'</span>' +
+                '<span class="text-center totalPrice">Total price: '+totalPrice+'</span>' +
                 '<div class="cartButtons">' +
                 '<button class="btn btn-secondary btn-sm clearCart">Clear cart</button>' +
                 '<button class="btn btn-primary btn-sm checkout">Checkout</button>' +
@@ -133,7 +157,7 @@ $(document).ready(function () {
             $('.cartContent').append(generalHtml);
         }
 
-        $('.totalPrice').text('Total price: ' + totalPrice.toFixed(2));
+        $('.totalPrice').text('Total price: ' + totalPrice);
 
         let newItemCount = newCart.length;
         $('.totalCartItems').text(newItemCount);
@@ -141,9 +165,11 @@ $(document).ready(function () {
         sessionStorage.setItem("cart", JSON.stringify(newCart));
     }
 
+    // TODO sutvarkyk floatus
     // Remove clicked item from cart
     function removeFromCart(productId, userId) {
         let cart = JSON.parse(sessionStorage.getItem("cart"));
+        console.log(cart)
         let cartItemCount = $.isEmptyObject(cart) ? 0 : cart['length'];
         let totalPrice = 0;
 
@@ -158,20 +184,29 @@ $(document).ready(function () {
                 if (value['id'] === productId) {
                     if (value['count'] > 1) {
                         let newValue = value;
+                        console.log(newValue, "Jau yra toks itemas, dupinam")
                         newValue['count'] = value['count']-1;
+                        console.log(newValue['count'], "To itemo naujas countas")
                         newValue['total'] = priceCounter(userId, newValue['count'], newValue['memberPrice'], newValue['regularPrice']);
+                        console.log(newValue['total'], "To itemo nauja kaina ir buves totalas", totalPrice)
 
-                        totalPrice += newValue['total'];
+                        totalPrice = totalPrice + newValue['total'];
+                        console.log(totalPrice, "Naujas totalas")
+                        $('#cartProductTotal' + value['id']).text(newValue['count']);
                         $('#cartProductPrice' + value['id']).text(newValue['total']);
                         newCart.push(newValue);
                     } else {
                         $('#cartProduct' + value['id']).remove();
                     }
                 } else {
+                    console.log(value['total'], "esamas totalas, nes niekas nesikeite")
                     totalPrice += value['total'];
+                    console.log(totalPrice, "naujas totalas su tuo itemu kuris neiskeite")
                     newCart.push(value);
                 }
             });
+
+            totalPrice = parseFloat(totalPrice);
 
             $('.totalPrice').text('Total price: ' + totalPrice.toFixed(2));
 

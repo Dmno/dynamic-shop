@@ -36,7 +36,7 @@ class IndexController extends AbstractController
             'design' => $design,
             'products' => $this->productRepository->getProductsWithLimitAndOrder($design['productCount']),
             'cart' => $cartProducts,
-            'cartTotal' => $cartTotals['price']
+            'cartTotal' => $cartTotals['price'] ?? 0
         ]);
     }
 
@@ -52,8 +52,8 @@ class IndexController extends AbstractController
         return $this->render('main/checkout.html.twig', [
             'design' => $this->getDesign(),
             'cart' => $cartProducts,
-            'cartTotal' => $cartTotals['price'],
-            'cartTotalItems' => $cartTotals['count']
+            'cartTotal' => $cartTotals['price'] ?? 0,
+            'cartTotalItems' => $cartTotals['count'] ?? 0
         ]);
     }
 
