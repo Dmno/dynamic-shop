@@ -5,7 +5,6 @@
         body {
             background-color: {{ design.pageColor }};
             color: {{ design.textColor }};
-            padding: 100px;
         }
 
         a {
@@ -13,9 +12,20 @@
         }
     </style>
 
-    <div class="checkoutBlock">
-        <img class="checkoutLogo" alt="{{ design.title}}" src="{% if design.logo is not null %}{{ asset('front/' ~ design.logo ) }}{% else %}{{ asset( 'logo.png' ) }}{% endif %}" />
+    <div class="header">
+        <a href="{{ path('main') }}"><img class="logo" alt="{{ design.title}}" src="{% if design.logo is not null %}{{ asset('front/' ~ design.logo ) }}{% else %}{{ asset( 'logo.png' ) }}{% endif %}" /></a>
 
+        <div class="auth">
+            {% if app.user %}
+                <a href="{{ path('app_logout')}}">Logout</a>
+            {% else %}
+                <a href="{{ path('app_login')}}">Login</a>
+                <a href="{{ path('app_register')}}">Register</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="checkoutBlock">
         <h3 class="checkoutTitle">Your cart</h3>
 
         <div class="checkoutTotalPrice">

@@ -21,13 +21,14 @@ $(document).ready(function () {
                 $('.cart').append(cartHtml);
 
                 $.each(cart, function(index, value) {
+                    let total = parseFloat(value['total']);
                     productHtml +=
                         '<div class="cartProduct" id="cartProduct'+ value['id'] +'">' +
                         '<span>'+value["title"]+'</span>' +
-                        '<p id="cartProductPrice' + value['id'] +'">'+value['total'].toFixed(2)+'</p>' +
+                        '<p id="cartProductPrice' + value['id'] +'">'+total+'</p>' +
                         '</div>'
 
-                    totalPrice += value['total'];
+                    totalPrice += total;
                 });
 
                 $('.cartProducts').append(productHtml);
@@ -51,12 +52,12 @@ $(document).ready(function () {
                     let currentClass = $(this).attr('id');
                     let id = currentClass.replace('cartProduct','');
                     let count = parseInt($('#cartProductTotal' + id).text());
-                    let memberPrice = $('#memberPrice' + id).find('p').text();
-                    let regularPrice = $('#regularPrice' + id).find('p').text();
+                    let memberPrice = parseFloat($('#memberPrice' + id).find('p').text());
+                    let regularPrice = parseFloat($('#regularPrice' + id).find('p').text());
 
                     let newCartProduct = {
                         "id": id,
-                        "title": $('#productTitle' + id).text,
+                        "title": $('#productTitle' + id).text(),
                         "image": $('#productImage' + id).prop('src'),
                         "regularPrice": regularPrice,
                         "memberPrice": memberPrice,
@@ -89,8 +90,8 @@ $(document).ready(function () {
             "id": productId,
             "title": $('#productTitle' + productId).text(),
             "image": $('#productImage' + productId).prop('src'),
-            "regularPrice": $('#regularPrice' + productId).find('p').text(),
-            "memberPrice": $('#memberPrice' + productId).find('p').text()
+            "regularPrice": parseFloat($('#regularPrice' + productId).find('p').text()),
+            "memberPrice": parseFloat($('#memberPrice' + productId).find('p').text())
         };
 
         let cart = JSON.parse(sessionStorage.getItem("cart"));
@@ -104,9 +105,8 @@ $(document).ready(function () {
                 if (value['id'] === productId) {
                     isDuplicate = true;
                     let itemCount = value['count']+1;
-                    let currentItemPrice = priceCounter(userId, itemCount, value['memberPrice'], value['regularPrice']);
-                    totalPrice += parseFloat(currentItemPrice);
-                    console.log(totalPrice);
+                    let currentItemPrice = parseFloat(priceCounter(userId, itemCount, value['memberPrice'], value['regularPrice']));
+                    totalPrice = totalPrice + currentItemPrice;
 
                     let duplicateCartItem = value;
                     duplicateCartItem['count'] = itemCount;
@@ -115,8 +115,7 @@ $(document).ready(function () {
                     $('#cartProductTotal' + value['id']).text(itemCount);
                     $('#cartProductPrice' + value['id']).text(currentItemPrice);
                 } else {
-                    totalPrice += parseFloat(priceCounter(userId, value['count'], value['memberPrice'], value['regularPrice'])).toFixed(2);
-                    console.log(totalPrice);
+                    totalPrice = totalPrice + parseFloat(priceCounter(userId, value['count'], value['memberPrice'], value['regularPrice']));
                     newCart.push(value);
                 }
             });
@@ -131,9 +130,8 @@ $(document).ready(function () {
 
         if (!isDuplicate) {
             productArray['count'] = 1;
-            productArray['total'] = priceCounter(userId, productArray['count'], productArray['memberPrice'], productArray['regularPrice']);
-            totalPrice += parseFloat(productArray['total']);
-            console.log(totalPrice);
+            productArray['total'] = parseFloat(priceCounter(userId, productArray['count'], productArray['memberPrice'], productArray['regularPrice']));
+            totalPrice += productArray['total'];
             newCart.push(productArray);
 
             productHtml +=
@@ -157,7 +155,7 @@ $(document).ready(function () {
             $('.cartContent').append(generalHtml);
         }
 
-        $('.totalPrice').text('Total price: ' + totalPrice);
+        $('.totalPrice').text('Total price: ' + totalPrice.toFixed(2));
 
         let newItemCount = newCart.length;
         $('.totalCartItems').text(newItemCount);
@@ -165,11 +163,9 @@ $(document).ready(function () {
         sessionStorage.setItem("cart", JSON.stringify(newCart));
     }
 
-    // TODO sutvarkyk floatus
     // Remove clicked item from cart
     function removeFromCart(productId, userId) {
         let cart = JSON.parse(sessionStorage.getItem("cart"));
-        console.log(cart)
         let cartItemCount = $.isEmptyObject(cart) ? 0 : cart['length'];
         let totalPrice = 0;
 
@@ -184,14 +180,10 @@ $(document).ready(function () {
                 if (value['id'] === productId) {
                     if (value['count'] > 1) {
                         let newValue = value;
-                        console.log(newValue, "Jau yra toks itemas, dupinam")
                         newValue['count'] = value['count']-1;
-                        console.log(newValue['count'], "To itemo naujas countas")
-                        newValue['total'] = priceCounter(userId, newValue['count'], newValue['memberPrice'], newValue['regularPrice']);
-                        console.log(newValue['total'], "To itemo nauja kaina ir buves totalas", totalPrice)
+                        newValue['total'] = parseFloat(priceCounter(userId, newValue['count'], newValue['memberPrice'], newValue['regularPrice']));
 
                         totalPrice = totalPrice + newValue['total'];
-                        console.log(totalPrice, "Naujas totalas")
                         $('#cartProductTotal' + value['id']).text(newValue['count']);
                         $('#cartProductPrice' + value['id']).text(newValue['total']);
                         newCart.push(newValue);
@@ -199,14 +191,12 @@ $(document).ready(function () {
                         $('#cartProduct' + value['id']).remove();
                     }
                 } else {
-                    console.log(value['total'], "esamas totalas, nes niekas nesikeite")
-                    totalPrice += value['total'];
-                    console.log(totalPrice, "naujas totalas su tuo itemu kuris neiskeite")
+                    totalPrice = totalPrice + value['total'];
                     newCart.push(value);
                 }
             });
 
-            totalPrice = parseFloat(totalPrice);
+            // totalPrice = totalPrice;
 
             $('.totalPrice').text('Total price: ' + totalPrice.toFixed(2));
 

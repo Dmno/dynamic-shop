@@ -102,7 +102,7 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if (isset($form['imageUpload'])) {
+            if ($form['imageUpload']->getData()) {
                 $image = $this->imageService->checkAndProcessFile($form['imageUpload']->getData(), true, false);
                 $product->setImage($image);
             }
@@ -137,7 +137,7 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if (isset($form['imageUpload'])) {
+            if ($form['imageUpload']->getData()) {
                 $image = $this->imageService->checkAndProcessFile($form['imageUpload']->getData(), true, false);
                 $product->setImage($image);
             }
@@ -170,7 +170,6 @@ class AdminController extends AbstractController
         return $this->redirect($referer);
     }
 
-    // TODO pridek logo upload aswell
     #[Route('/edit-design/{id}', name: 'edit_design')]
     public function editDesign(Request $request, int $id): Response
     {

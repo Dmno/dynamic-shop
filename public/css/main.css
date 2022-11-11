@@ -18,6 +18,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 0 10px;
+    min-height: 100px;
 }
 
 @media (max-width: 450px) {
@@ -33,7 +34,7 @@ body {
 
 .logo {
     max-height: 100px;
-    max-width: 100%;
+    max-width: 200px;
 }
 
 .thumbnail {
@@ -60,6 +61,13 @@ body {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+    font-size: 50px;
+}
+
+@media (max-width: 768px) {
+    .backgroundText {
+        font-size: 24px;
+    }
 }
 
 /* PRODUCTS */
@@ -236,6 +244,7 @@ ul {
     justify-content: center;
     align-items: center;
     border-radius: 10px;
+    margin: 100px;
 }
 
 .checkoutLogo {

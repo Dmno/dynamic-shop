@@ -31,8 +31,12 @@ class ProductType extends AbstractType
                 ],
                 'empty_data' => ''
             ])
-            ->add('regularPrice', NumberType::class)
-            ->add('memberPrice', NumberType::class)
+            ->add('regularPrice', NumberType::class, [
+                'help' => 'Only numbers 1-9 and decimals allowed (2.99)'
+            ])
+            ->add('memberPrice', NumberType::class, [
+                'help' => 'Only numbers 1-9 and decimals allowed (1.87)'
+            ])
             ->add('Submit', SubmitType::class);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -45,9 +46,15 @@ class DesignType extends AbstractType
                 ],
                 'empty_data' => ''
             ])
-            ->add('pageColor', TextType::class)
-            ->add('textColor', TextType::class)
-            ->add('secondaryTextColor', TextType::class)
+            ->add('pageColor', ColorType::class, [
+                'help' => 'Affects the page background color'
+            ])
+            ->add('textColor', ColorType::class, [
+                'help' => 'Affects the main text of the page'
+            ])
+            ->add('secondaryTextColor', ColorType::class, [
+                'help' => 'Affects the links of the page'
+            ])
             ->add('phoneNumber', NumberType::class)
             ->add('companyName', TextType::class)
             ->add('address', TextType::class)
