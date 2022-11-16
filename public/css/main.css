@@ -301,3 +301,51 @@ ul {
     justify-content: space-between;
     margin: 10px 0;
 }
+
+/* OVERLAY */
+
+.overlay {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(43,37,35,.40);
+    z-index: 199;
+}
+
+.modal {
+    opacity: 1!important;
+    margin-top: 200px;
+    z-index: 200;
+    color: black;
+}
+
+.modal-dialog {
+    transform: none!important;
+}
+
+/* Register */
+
+.register-parent {
+    display: flex;
+    justify-content: center;
+}
+
+.register-block {
+    display: flex;
+    flex-direction: row;
+    max-width: 900px;
+    max-height: 100%;
+    border-radius: 10px;
+    box-shadow: 7px 12px 15px 11px #888888;
+}
+
+.register-sidebar {
+    width: 500px;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+}

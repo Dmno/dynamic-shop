@@ -1,0 +1,31 @@
+{#<div class="overlay" id="indexOverlay" style="display: none;">#}
+<div id="indexModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
+    <div role="document" class="modal-dialog" style="max-width: 800px!important;">
+        <div class="modal-content login-modal-content">
+            <div class="modal-header">
+                <h4 id="exampleModalLabel" class="modal-title">Login</h4>
+                <button type="button" data-dismiss="modal" aria-label="Close" class="closeModal btn btn-sm btn-secondary"><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                <form name="login" method="post" id="loginForm">
+                    <div id="login">
+                        <label class="credential-error" style="display: none;color: red;">Invalid credentials</label>
+                        <div class="form-group">
+                            <label for="login_email" class="required">Email</label>
+                            <div class="email-error" style="display: none;color: red;">Invalid email address</div>
+                            <input type="text" id="login_email" name="email" required="required" autofocus="autofocus" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="login_password" class="required">Password</label>
+                            <input type="password" id="login_password" name="password" required="required" autocomplete="off" class="form-control">
+                        </div>
+                    </div>
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                </form>
+
+                <button id="login-submit" class="btn btn-primary">Login</button>
+            </div>
+        </div>
+    </div>
+</div>
+{#</div>#}
