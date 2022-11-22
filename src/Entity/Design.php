@@ -16,11 +16,17 @@ class Design
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $title = null;
 
+    #[ORM\Column(length: 10, nullable: true)]
+    private ?int $titleFontSize = null;
+
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?Image $logoImage = null;
 
     #[ORM\Column(length: 20, nullable: true)]
     private ?string $pageColor = null;
+
+    #[ORM\Column(length: 20, nullable: true)]
+    private ?string $secondaryPageColor = null;
 
     #[ORM\Column(length: 20, nullable: true)]
     private ?string $textColor = null;
@@ -52,6 +58,9 @@ class Design
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?Image $backgroundImage = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $productTitle = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -65,6 +74,18 @@ class Design
     public function setTitle(?string $title): void
     {
         $this->title = $title;
+    }
+
+    public function getTitleFontSize(): ?int
+    {
+        return $this->titleFontSize;
+    }
+
+    public function setTitleFontSize(?int $titleFontSize): self
+    {
+        $this->titleFontSize = $titleFontSize;
+
+        return $this;
     }
 
     public function getLogoImage(): ?Image
@@ -103,6 +124,18 @@ class Design
     public function setPageColor(?string $pageColor): self
     {
         $this->pageColor = $pageColor;
+
+        return $this;
+    }
+
+    public function getSecondaryPageColor(): ?string
+    {
+        return $this->secondaryPageColor;
+    }
+
+    public function setSecondaryPageColor(?string $secondaryPageColor): self
+    {
+        $this->secondaryPageColor = $secondaryPageColor;
 
         return $this;
     }
@@ -209,6 +242,18 @@ class Design
     public function setProductCount(?int $productCount): self
     {
         $this->productCount = $productCount;
+
+        return $this;
+    }
+
+    public function getProductTitle(): ?string
+    {
+        return $this->productTitle;
+    }
+
+    public function setProductTitle(?string $productTitle): self
+    {
+        $this->productTitle = $productTitle;
 
         return $this;
     }

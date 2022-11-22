@@ -44,7 +44,7 @@ class DesignRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('d')
             ->leftJoin('d.logoImage', 'l')
             ->leftJoin('d.backgroundImage', 'i')
-            ->select('d.id, d.title, l.title as logo, d.pageColor, d.textColor, d.secondaryTextColor, d.phoneNumber, d.companyName, d.address, d.country, d.postalCode, d.copyright, d.productCount, i.title as backgroundImage')
+            ->select('d.id, d.title, d.titleFontSize, l.title as logo, d.pageColor, d.secondaryPageColor, d.textColor, d.secondaryTextColor, d.productTitle, d.phoneNumber, d.companyName, d.address, d.country, d.postalCode, d.copyright, d.productCount, i.title as backgroundImage')
             ->getQuery()
             ->getSingleResult();
     }

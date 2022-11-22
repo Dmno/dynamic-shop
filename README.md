@@ -27,3 +27,9 @@ Make sure docker is installed before attempting to launch it in a local environm
 ## Previewing the project
 
 - Navigate to the browser and access http://localhost:8001 to see the site
+
+
+### TODOs:
+
+- Add currency to everywhere
+

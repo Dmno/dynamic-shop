@@ -61,16 +61,18 @@ class CartController extends AbstractController
             $user = $this->userRepository->findOneBy(['id' => $userId]);
 
             $cart = $user->getCart();
-            $products = $cart->getProducts();
+            if ($cart) {
+                $products = $cart->getProducts();
 
-            $position = array_search($productId, $products, true);
+                $position = array_search($productId, $products, true);
 
-            if ($position !== false) {
-                unset($products[$position]);
+                if ($position !== false) {
+                    unset($products[$position]);
 
-                $cart->setProducts($products);
-                $this->em->persist($cart);
-                $this->em->flush();
+                    $cart->setProducts($products);
+                    $this->em->persist($cart);
+                    $this->em->flush();
+                }
             }
         }
 

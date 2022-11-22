@@ -12,9 +12,12 @@ class DesignFixtures extends Fixture
     {
         $design = new Design();
         $design->setTitle('A very nice title!');
+        $design->setTitleFontSize('50');
         $design->setPageColor('#000000');
+        $design->setSecondaryPageColor('#6f6f6f');
         $design->setTextColor('#FFFFFF');
         $design->setSecondaryTextColor('#E50C12');
+        $design->setProductTitle('OUR COLLECTIONS');
         $design->setPhoneNumber('861564564');
         $design->setCompanyName('Test company');
         $design->setAddress('Test address');

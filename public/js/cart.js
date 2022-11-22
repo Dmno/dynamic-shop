@@ -37,7 +37,9 @@ $(document).ready(function () {
                     '<span class="text-center totalPrice">Total price: '+totalPrice.toFixed(2)+'</span>' +
                     '<div class="cartButtons">' +
                     '<button class="btn btn-secondary btn-sm clearCart">Clear cart</button>' +
+                    '<a href="/checkout">' +
                     '<button class="btn btn-primary btn-sm checkout">Checkout</button>' +
+                    '</a>' +
                     '</div>';
 
                 $('.cartContent').append(generalHtml);
@@ -85,6 +87,7 @@ $(document).ready(function () {
         let cartHtml = '';
         let productHtml = '';
         let generalHtml = '';
+        let removeButtonHtml = '';
         let totalPrice = 0;
         let productArray = {
             "id": productId,
@@ -141,6 +144,10 @@ $(document).ready(function () {
                 '<p id="cartProductPrice'+ productArray['id'] +'">'+ productArray['total'] +'</p>' +
                 '</div>'
 
+            removeButtonHtml +=
+                '<button class="btn btn-sm btn-success removeFromCart" id="removeFromCart'+ productArray['id'] +'">Remove from cart</button>'
+
+            $("#removeButtonBlock" + productArray['id']).append(removeButtonHtml);
             $('.cartProducts').append(productHtml);
         }
 
@@ -149,7 +156,9 @@ $(document).ready(function () {
                 '<span class="text-center totalPrice">Total price: '+totalPrice+'</span>' +
                 '<div class="cartButtons">' +
                 '<button class="btn btn-secondary btn-sm clearCart">Clear cart</button>' +
+                '<a href="/checkout">' +
                 '<button class="btn btn-primary btn-sm checkout">Checkout</button>' +
+                '</a>' +
                 '</div>';
 
             $('.cartContent').append(generalHtml);
@@ -189,14 +198,13 @@ $(document).ready(function () {
                         newCart.push(newValue);
                     } else {
                         $('#cartProduct' + value['id']).remove();
+                        $("#removeFromCart" + value['id']).remove();
                     }
                 } else {
                     totalPrice = totalPrice + value['total'];
                     newCart.push(value);
                 }
             });
-
-            // totalPrice = totalPrice;
 
             $('.totalPrice').text('Total price: ' + totalPrice.toFixed(2));
 
@@ -219,6 +227,7 @@ $(document).ready(function () {
         $('.cartButtons').remove();
         $('.cartDisplay').fadeOut("fast").remove();
         $('.totalCartItems').text(0);
+        $(".removeFromCart").remove();
 
         if (userId) {
             $.ajax({
@@ -257,9 +266,9 @@ $(document).ready(function () {
     });
 
     // Remove single item
-    $(".removeFromCart").on("click",function () {
+    $("body").on("click", ".removeFromCart", function(){
         let userId = $('.userId').attr('id');
-        let productId = this.id;
+        let productId = this.id.replace('removeFromCart','');
 
         removeFromCart(productId, userId);
 

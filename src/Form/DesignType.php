@@ -22,6 +22,12 @@ class DesignType extends AbstractType
 
         $builder
             ->add('title', TextType::class)
+            ->add('titleFontSize', NumberType::class, [
+                'help' => 'Font size in px, example - 50',
+                'attr' => [
+                    'placeholder' => '50'
+                ]
+            ])
             ->add('imageUpload', FileType::class, [
                 'mapped' => false,
                 'required' => false,
@@ -49,11 +55,20 @@ class DesignType extends AbstractType
             ->add('pageColor', ColorType::class, [
                 'help' => 'Affects the page background color'
             ])
+            ->add('secondaryPageColor', ColorType::class, [
+                'help' => 'Affects all secondary page elements'
+            ])
             ->add('textColor', ColorType::class, [
                 'help' => 'Affects the main text of the page'
             ])
             ->add('secondaryTextColor', ColorType::class, [
                 'help' => 'Affects the links of the page'
+            ])
+            ->add('productTitle', TextType::class, [
+                'help' => 'Controls the title of the product section',
+                'attr' => [
+                    'placeholder' => 'OUR COLLECTIONS'
+                ]
             ])
             ->add('phoneNumber', NumberType::class)
             ->add('companyName', TextType::class)
