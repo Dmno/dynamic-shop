@@ -32,4 +32,5 @@ Make sure docker is installed before attempting to launch it in a local environm
 ### TODOs:
 
 - Add currency to everywhere
+- Admin button in main page if user is admin?
 
