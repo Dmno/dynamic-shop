@@ -9,6 +9,10 @@ body {
     align-items: center;
 }
 
+a {
+    text-decoration: none;
+}
+
 .header {
     grid-area: header;
     width: 100%;
@@ -325,6 +329,30 @@ ul {
 .checkoutButtons {
     justify-content: space-between;
     margin: 10px 0;
+}
+
+.checkoutButton {
+    margin-right: 20px;
+}
+
+@media (max-width: 700px) {
+    .checkoutBlock {
+        margin: 30px;
+    }
+
+    .checkoutProductCard {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .checkoutPriceTop {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .checkoutButton {
+        margin-right: 0;
+    }
 }
 
 /* OVERLAY */

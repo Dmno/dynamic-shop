@@ -28,7 +28,7 @@ $(document).ready(function () {
                 let status = response.status;
 
                 if (status === "Signed in") {
-                    window.location.replace("/");
+                    window.location.reload();
                 } else {
                     if (status === "Invalid email") {
                         $('#login_email').css("border-color","red");

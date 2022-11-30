@@ -61,6 +61,9 @@ class Design
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $productTitle = null;
 
+    #[ORM\Column(length: 5, nullable: true)]
+    private ?string $currency = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -254,6 +257,18 @@ class Design
     public function setProductTitle(?string $productTitle): self
     {
         $this->productTitle = $productTitle;
+
+        return $this;
+    }
+
+    public function getCurrency(): ?string
+    {
+        return $this->currency;
+    }
+
+    public function setCurrency(?string $currency): self
+    {
+        $this->currency = $currency;
 
         return $this;
     }

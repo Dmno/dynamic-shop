@@ -77,6 +77,9 @@ class DesignType extends AbstractType
             ->add('postalCode', TextType::class)
             ->add('copyright', TextType::class)
             ->add('productCount', TextType::class)
+            ->add('currency', TextType::class, [
+                'help' => 'Controls the currency for the entire site, example - €'
+            ])
             ->add('Submit', SubmitType::class);
     }
 }

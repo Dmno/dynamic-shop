@@ -17,14 +17,16 @@
 
     </style>
 
+    {% include 'main/modal.html.twig' %}
+
     <div class="header">
-        <a href="{{ path('main') }}"><img class="logo" alt="{{ design.title}}" src="{% if design.logo is not null %}{{ asset('front/' ~ design.logo ) }}{% else %}{{ asset( 'logo.png' ) }}{% endif %}" /></a>
+        <a href="{{ path('main') }}"><img class="logo" alt="{{ design.title }}" src="{% if design.logo is not null %}{{ asset('front/' ~ design.logo ) }}{% else %}{{ asset( 'logo.png' ) }}{% endif %}" /></a>
 
         <div class="auth">
             {% if app.user %}
                 <a href="{{ path('app_logout')}}">Logout</a>
             {% else %}
-                <a href="{{ path('app_login')}}">Login</a>
+                <button class="btn btn-primary ml-3 loginModal">Login</button>
                 <a href="{{ path('app_register')}}">Register</a>
             {% endif %}
         </div>
@@ -33,12 +35,12 @@
     <div class="checkoutBlock">
         <h3 class="checkoutTitle">Your cart</h3>
 
-        <div class="checkoutTotalPrice">
+        <div class="checkoutTotalPrice checkoutPriceTop">
             <a href="#checkout">
-                <button class="btn btn-sm btn-primary ml-1" style="margin-right: 20px;">Proceed to checkout</button>
+                <button class="btn btn-sm btn-primary ml-1 checkoutButton">Proceed to checkout</button>
             </a>
 
-            Subtotal ({{ cartTotalItems }}{% if cartTotalItems > 1 %} items{% else %} item{% endif %}): {{ cartTotal }}
+            <span class="cartSubtotal">Subtotal ({{ cartTotalItems }}{% if cartTotalItems > 1 %} items{% else %} item{% endif %}): {{ cartTotal }}{{ design.currency }}</span>
         </div>
 
         <div class="checkoutProducts">
@@ -57,7 +59,7 @@
                         <p class="checkoutProductCount">Quantity: {{ cartItem.count }}</p>
                         <p class="checkoutProductPrice">Price:
                             {% if app.user %}
-                                {{ cartItem.memberPriceTotal }}
+                                {{ cartItem.memberPriceTotal }}{{ design.currency }}
                             {% endif %}
                         </p>
                     </div>
@@ -65,8 +67,9 @@
             {% endfor %}
         </div>
 
-        <div class="checkoutTotalPrice">
-            Subtotal ({{ cartTotalItems }}{% if cartTotalItems > 1 %} items{% else %} item{% endif %}): {{ cartTotal }}
+        <hr class="checkoutProductLine" style="width: 90%;">
+        <div class="checkoutTotalPrice checkoutPriceBottom">
+            Subtotal ({{ cartTotalItems }}{% if cartTotalItems > 1 %} items{% else %} item{% endif %}): {{ cartTotal }}{{ design.currency }}
         </div>
 
         <div class="checkoutButtons">
@@ -79,4 +82,8 @@
             </a>
         </div>
     </div>
+    {% if app.user %}
+        <i class="userId" id="{{ app.user.id }}" style="display: none;"></i>
+    {% endif %}
+    <i class="pageCurrency" id="{{ design.currency }}" style="display: none;"></i>
 {% endblock %}

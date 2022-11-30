@@ -14,7 +14,7 @@ final class Version20221121092230 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return '';
+        return 'Add additional design fields';
     }
 
     public function up(Schema $schema): void
@@ -23,6 +23,7 @@ final class Version20221121092230 extends AbstractMigration
         $this->addSql('ALTER TABLE design ADD secondary_page_color VARCHAR(20) DEFAULT NULL');
         $this->addSql('ALTER TABLE design ADD product_title VARCHAR(255) DEFAULT NULL');
         $this->addSql('ALTER TABLE design ADD title_font_size INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE design ADD currency VARCHAR(5) DEFAULT NULL');
     }
 
     public function down(Schema $schema): void
@@ -31,5 +32,6 @@ final class Version20221121092230 extends AbstractMigration
         $this->addSql('ALTER TABLE design DROP secondary_page_color');
         $this->addSql('ALTER TABLE design DROP product_title');
         $this->addSql('ALTER TABLE design DROP title_font_size');
+        $this->addSql('ALTER TABLE design DROP currency');
     }
 }

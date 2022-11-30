@@ -25,6 +25,7 @@ class DesignFixtures extends Fixture
         $design->setPostalCode('AB-15487');
         $design->setCopyright('Copyright © 2022 TEST. All Rights Reserved.');
         $design->setProductCount('10');
+        $design->setCurrency('€');
 
         $manager->persist($design);
         $manager->flush();
